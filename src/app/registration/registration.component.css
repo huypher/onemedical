@@ -1,0 +1,35 @@
+
+      .login-form {
+        max-width: 300px;
+      }
+
+      .login-form-margin {
+        margin-bottom: 16px;
+      }
+
+      .login-form-forgot {
+        float: right;
+      }
+
+      .login-form-button {
+        width: 100%;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .login-form {
+        width: 100vh;
+        height: 100vh;
+      }
+
+      .header {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+
+      .registration_form {
+        display: flex;
+        justify-content: center;
+      }
