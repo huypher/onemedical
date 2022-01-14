@@ -18,6 +18,10 @@ import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
 import {NzProgressModule} from "ng-zorro-antd/progress";
+import { LoginInfoStepComponent } from './login-info-step/login-info-step.component';
+import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzSpaceModule} from "ng-zorro-antd/space";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(en);
 
@@ -25,22 +29,26 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     RegistrationComponent,
+    LoginInfoStepComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    NzFormModule,
-    NzInputModule,
-    ReactiveFormsModule,
-    NzButtonModule,
-    NzLayoutModule,
-    NzDividerModule,
-    NzPageHeaderModule,
-    NzProgressModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        NzFormModule,
+        NzInputModule,
+        ReactiveFormsModule,
+        NzButtonModule,
+        NzLayoutModule,
+        NzDividerModule,
+        NzPageHeaderModule,
+        NzProgressModule,
+        NzSelectModule,
+        NzSpaceModule,
+        NgbModule,
+    ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
   <div nz-col class="gutter-row" [nzSpan]="7"></div>
-  <div nz-col class="gutter-row center" [nzSpan]="10">
+  <div nz-col class="gutter-row text-center" [nzSpan]="10">
     <h1 class="header">Page Title</h1>
   </div>
   <div nz-col class="gutter-row" [nzSpan]="7"></div>
@@ -9,47 +9,12 @@
 <nz-progress [nzPercent]="percent" [nzShowInfo]="false"></nz-progress>
 
 <div nz-row class="layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-  <div nz-col class="gutter-row" [nzSpan]="7"></div>
-  <div nz-col class="gutter-row center" [nzSpan]="10">
-    <br>
-    <br>
-    <h2>Join One Medical</h2>
-    <p>It just takes a few minutes to sign up and get fast, easy access to care, 24/7. No need for your insurance card</p>
-    <br>
-    <br>
-    <ng-container>
-      <div class="registration_form">
-        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-          <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your username!">
-              <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="userName" placeholder="Username" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your Password!">
-              <nz-input-group nzPrefixIcon="lock">
-                <input type="password" nz-input formControlName="password" placeholder="Password" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-          <div nz-row class="login-form-margin">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="remember">
-                <span>Remember me</span>
-              </label>
-            </div>
-            <div nz-col [nzSpan]="12">
-              <a class="login-form-forgot">Forgot password</a>
-            </div>
-          </div>
-          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
-          Or
-          <a>register now!</a>
-        </form>
-      </div>
+  <div nz-col class="gutter-row" [nzSpan]="8"></div>
+  <div nz-col class="gutter-row" [nzSpan]="8">
+    <ng-container [ngSwitch]="currentStep | async">
+      <app-login-info-step *ngSwitchCase="'login_info'">
+      </app-login-info-step>
     </ng-container>
   </div>
-  <div nz-col class="gutter-row" [nzSpan]="7"></div>
+  <div nz-col class="gutter-row" [nzSpan]="8"></div>
 </div>

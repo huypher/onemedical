@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {BehaviorSubject} from "rxjs";
+
+type Step = 'login_info' | 'address_info';
 
 @Component({
   selector: 'app-registration',
@@ -8,28 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
   @Input() percent: number = 20;
-  validateForm!: FormGroup;
-
-  submitForm(): void {
-    if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-    } else {
-      Object.values(this.validateForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
-    }
-  }
-
-  constructor(private fb: FormBuilder) {}
+  currentStep: BehaviorSubject<Step> = new BehaviorSubject<Step>('login_info')
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      remember: [true]
-    });
   }
 }
