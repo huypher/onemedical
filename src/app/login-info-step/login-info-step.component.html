@@ -7,7 +7,7 @@
   </div>
   <br>
   <label class="label">Full name</label>
-  <div class="filed-name">
+  <div class="field-name">
     <nz-form-item class="first-name">
       <nz-form-control>
         <nz-input-group>
@@ -74,7 +74,7 @@
         </ng-template>
         <div *nzSpaceItem [ngClass]="{'pwd-not-match': !pwdLen, 'pwd-match': pwdLen}">8 or more characters</div>
       </nz-space>
-      <a (click)="togglePassword()" style="text-decoration: underline; font-size: 0.7rem">{{showPassword ? 'Hide password': 'Show password'}}</a>
+      <a (click)="togglePassword()" style="font-size: 0.7rem" class="link-primary">{{showPassword ? 'Hide password': 'Show password'}}</a>
     </div>
 
     <nz-space>
@@ -127,6 +127,14 @@
       Already a member?
       <a class="link-primary">Login</a>
     </div>
-    <button nz-button class="submit" [disabled]="!validateForm.valid || !validPassword" (click)="submit()">Next</button>
+    <button
+      nz-button
+      class="submit"
+      [disabled]="!validateForm.valid || !validPassword"
+      (click)="submit()"
+      [nzLoading]="loading"
+    >
+      {{loading ? '' : 'Next'}}
+    </button>
   </div>
 </form>

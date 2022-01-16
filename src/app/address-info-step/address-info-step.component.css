@@ -1,8 +1,4 @@
-.text-center {
-  text-align: center;
-}
-
-.login-info-step-form {
+.address-info-step-form {
   display: flex;
   flex-flow: column wrap;
   margin-left: auto;
@@ -10,68 +6,27 @@
   width: 100%;
 }
 
-
-.field-name {
+.state-zipcode {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.first-name {
-  width: 48%;
-}
-
-.last-name {
-  width: 48%;
-}
-
-.preferred-name {
-  float: left;
-}
-
-.label {
-  float: left;
-}
-
-.pwd-requirements {
+.state {
   display: flex;
   flex-flow: column wrap;
+  width: 48%;
 }
 
-.pwd-not-match {
-  color: #adb5bd;
-  font-size: 0.7rem;
-}
-
-.pwd-not-match::before {
-  content: "•";
-  font-size: 21px;
-  line-height: 0;
-  margin: 0 3px 0 1px;
-}
-
-.pwd-match {
-  color: #068466;
-  font-size: 0.7rem;
-}
-
-.checkmark {
-  width: 12px;
-  height: 9px;
-}
-
-.pwd-visibility {
+.zipcode {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+  flex-flow: column wrap;
+  width: 48%;
 }
 
 .submit-container {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  margin-top: 20px;
-  max-height: 40px;
+  flex-flow: row-reverse wrap;
 }
 
 button.ant-btn.submit {

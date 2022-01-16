@@ -21,7 +21,10 @@ import {NzProgressModule} from "ng-zorro-antd/progress";
 import { LoginInfoStepComponent } from './login-info-step/login-info-step.component';
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzSpaceModule} from "ng-zorro-antd/space";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AddressInfoStepComponent} from "./address-info-step/address-info-step.component";
+import {PersonalInfoStepComponent} from "./personal-info-step/personal-info-step.component";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 registerLocaleData(en);
 
@@ -30,6 +33,8 @@ registerLocaleData(en);
     AppComponent,
     RegistrationComponent,
     LoginInfoStepComponent,
+    AddressInfoStepComponent,
+    PersonalInfoStepComponent,
   ],
     imports: [
         BrowserModule,
@@ -47,7 +52,8 @@ registerLocaleData(en);
         NzProgressModule,
         NzSelectModule,
         NzSpaceModule,
-        NgbModule,
+        NzCheckboxModule,
+        NzRadioModule,
     ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

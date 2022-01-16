@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {LoginInfoService} from "./login-info.service";
 import {LoginInfoReq} from "./types";
 
@@ -12,10 +11,12 @@ type Rule = (self: any, pwd: string) => boolean
   styleUrls: ['./login-info-step.component.css']
 })
 export class LoginInfoStepComponent implements OnInit {
+  @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   validateForm!: FormGroup;
   preferredName: boolean = false;
   showPassword: boolean = false;
   validPassword: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -123,16 +124,19 @@ export class LoginInfoStepComponent implements OnInit {
 
   submit(): void {
     if (this.validateForm.valid && this.validPassword) {
-      console.log('submit', this.validateForm.value);
-      const body: LoginInfoReq =
-        {
-          first_name: this.validateForm.value.firstName,
-          last_name: this.validateForm.value.lastName,
-          preferred_name: this.validateForm.value.preferredName,
-          email: this.validateForm.value.email,
-          password: this.validateForm.value.password,
+      this.loading = true
+      const formValue: any = this.validateForm.value
+      const body: LoginInfoReq = {
+          first_name: formValue.firstName,
+          last_name: formValue.lastName,
+          preferred_name: formValue.preferredName,
+          email: formValue.email,
+          password: formValue.password,
         }
-      this.loginInfoService.postLoginInfo(body)
+      this.loginInfoService.postLoginInfo(body).subscribe(
+        resp => console.log(resp),
+        error => {console.log(error); this.done.emit(true)}
+      )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {

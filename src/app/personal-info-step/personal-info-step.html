@@ -1,0 +1,62 @@
+<form nz-form [formGroup]="validateForm" class="personal-info-step-form">
+  <br>
+  <div class="text-center">
+    <h2>Personal info</h2>
+  </div>
+  <br>
+  <label class="label">Phone number</label>
+  <nz-form-item class="phone-number-field">
+    <nz-form-control>
+      <nz-input-group>
+        <input type="text" nz-input formControlName="phoneNumber" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="checkbox-container">
+    <label nz-checkbox [(ngModel)]="downloadLinkChecked" formControlName="downloadLinkOption"></label>
+    <div style="width: 20px; height: 0px"></div>
+    <div class="text-label">
+      <p style="margin-bottom: 0.1em">Text me the link to download the app</p>
+      <p style="font-size: 0.8em">Get 27/4 care over video chat and messages at no cost</p>
+    </div>
+  </div>
+
+  <label class="label">Birthday</label>
+  <nz-form-item class="birthday-field">
+    <nz-form-control>
+      <nz-input-group>
+        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YY" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <p style="font-size: 0.8em; margin-bottom: 24px">Used to verify your identify before appointments</p>
+
+  <div>Legal sex</div>
+  <p style="font-size: 0.8em; margin-bottom: 0.5em">For billing purposes, which sex does your insurance have on record for you?</p>
+  <div style="margin-bottom: 24px">
+    <nz-radio-group formControlName="gender">
+      <label nz-radio nzValue="female">Female</label>
+      <label nz-radio nzValue="male">Male</label>
+    </nz-radio-group>
+  </div>
+
+  <ng-template [ngIf]="enableGenderInfo"; [ngIfElse]="hiddenGenderInfo">
+    <label class="label">Add gender Info (Optional)</label>
+    <nz-form-item class="gender-info-field">
+      <nz-form-control>
+        <nz-input-group>
+          <input type="text" nz-input formControlName="genderInfo" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <p style="font-size: 0.8em">Our entire team is committed to making sure every member feels safe, welcome, and respected.</p>
+  </ng-template>
+  <ng-template #hiddenGenderInfo>
+    <a (click)="showGenderInfo()" class="preferred-name">Add a preferred name</a>
+  </ng-template>
+
+  <div class="submit-container">
+    <button nz-button class="submit" [disabled]="!validateForm.valid" (click)="submit()">Next</button>
+  </div>
+</form>

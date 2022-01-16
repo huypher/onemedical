@@ -12,8 +12,16 @@
   <div nz-col class="gutter-row" [nzSpan]="8"></div>
   <div nz-col class="gutter-row" [nzSpan]="8">
     <ng-container [ngSwitch]="currentStep | async">
-      <app-login-info-step *ngSwitchCase="'login_info'">
+      <app-login-info-step *ngSwitchCase="'login-info'" (done)="nextStep()">
       </app-login-info-step>
+    </ng-container>
+    <ng-container [ngSwitch]="currentStep | async">
+      <app-address-info-step *ngSwitchCase="'address-info'" (done)="nextStep()">
+      </app-address-info-step>
+    </ng-container>
+    <ng-container [ngSwitch]="currentStep | async">
+      <app-personal-info-step *ngSwitchCase="'personal-info'"  (done)="nextStep()">
+      </app-personal-info-step>
     </ng-container>
   </div>
   <div nz-col class="gutter-row" [nzSpan]="8"></div>
