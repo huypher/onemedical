@@ -33,13 +33,11 @@
   <div class="state-zipcode">
     <div class="state">
       <label class="label">State</label>
-      <nz-form-item>
-        <nz-form-control>
-          <nz-input-group>
-            <input type="text" nz-input formControlName="state" />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
+      <nz-select nzAllowClear nzPlaceHolder="-- Select state --" formControlName="state">
+        <ng-container *ngFor="let state of states">
+          <nz-option nzLabel="{{state}}" nzValue="{{state}}"></nz-option>
+        </ng-container>
+      </nz-select>
     </div>
 
     <div class="zipcode">
@@ -55,16 +53,14 @@
   </div>
 
   <label class="label">Area</label>
-  <nz-form-item>
-    <nz-form-control>
-      <nz-input-group>
-        <input type="text" nz-input formControlName="area" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-
+  <nz-select nzAllowClear nzPlaceHolder="-- Select location --" formControlName="area">
+    <ng-container *ngFor="let area of areas">
+      <nz-option nzLabel="{{area}}" nzValue="{{area}}"></nz-option>
+    </ng-container>
+  </nz-select>
+  <br>
 
   <div class="submit-container">
-    <button nz-button class="submit" [disabled]="!validateForm.valid" (click)="submit()">Next</button>
+    <button nz-button class="submit" [disabled]="!allowSubmit()" (click)="submit()">Next</button>
   </div>
 </form>

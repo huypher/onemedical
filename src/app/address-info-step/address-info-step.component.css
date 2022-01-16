@@ -24,6 +24,10 @@
   width: 48%;
 }
 
+select.unset[_ngcontent-big-c291] {
+  color: #918f8d;
+}
+
 .submit-container {
   display: flex;
   flex-flow: row-reverse wrap;

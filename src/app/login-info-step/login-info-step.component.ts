@@ -122,6 +122,10 @@ export class LoginInfoStepComponent implements OnInit {
     return self.noSequential
   }
 
+  allowSubmit() {
+    return this.validateForm.valid && this.validPassword
+  }
+
   submit(): void {
     if (this.validateForm.valid && this.validPassword) {
       this.loading = true

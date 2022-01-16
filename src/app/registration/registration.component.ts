@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   fromStep(): number {
-    return 2
+    return 1
   }
 
   nextStep() {

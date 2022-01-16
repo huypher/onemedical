@@ -14,6 +14,7 @@ export class PersonalInfoStepComponent implements OnInit {
   validateForm!: FormGroup;
   enableGenderInfo: boolean = false
   validBirthday: boolean | undefined = undefined
+  validPhoneNumber: boolean | undefined = undefined
 
   constructor(
     private fb: FormBuilder,
@@ -37,8 +38,19 @@ export class PersonalInfoStepComponent implements OnInit {
     this.validBirthday = false
   }
 
+  phoneNumberValidator() {
+    const phoneNumber: string = this.validateForm.value.phoneNumber
+    this.validPhoneNumber = /^\d+$/.test(phoneNumber) && (phoneNumber.length == 10 ||
+      phoneNumber.length == 11)
+  }
+
   showGenderInfo() {
     this.enableGenderInfo = true
+  }
+
+  allowSubmit() {
+    return this.validateForm.valid && this.validBirthday && this.validBirthday !== undefined &&
+      this.validPhoneNumber && this.validPhoneNumber !== undefined
   }
 
   submit(): void {

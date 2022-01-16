@@ -130,7 +130,7 @@
     <button
       nz-button
       class="submit"
-      [disabled]="!validateForm.valid || !validPassword"
+      [disabled]="!allowSubmit()"
       (click)="submit()"
       [nzLoading]="loading"
     >
