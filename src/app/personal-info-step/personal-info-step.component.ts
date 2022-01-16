@@ -2,8 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {PersonalInfoStepService} from "./personal-info-step.service";
 import {PersonalInfoReq} from "./types";
-
-type Rule = (self: any, pwd: string) => boolean
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-personal-info-step',
@@ -13,8 +12,8 @@ type Rule = (self: any, pwd: string) => boolean
 export class PersonalInfoStepComponent implements OnInit {
   @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   validateForm!: FormGroup;
-  downloadLinkChecked: boolean = false
   enableGenderInfo: boolean = false
+  validBirthday: boolean | undefined = undefined
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +27,14 @@ export class PersonalInfoStepComponent implements OnInit {
       gender: [null, [Validators.required]],
       genderInfo: [null],
     });
+  }
+
+  birthdayValidator() {
+    if (moment(this.validateForm.value.birthday, 'MM/DD/YYYY', true).isValid()) {
+      this.validBirthday = true
+      return
+    }
+    this.validBirthday = false
   }
 
   showGenderInfo() {

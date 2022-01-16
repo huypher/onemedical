@@ -35,6 +35,18 @@
   flex-flow: row-reverse wrap;
 }
 
+.ant-checkbox-checked .ant-checkbox-inner{
+  border-color: red !important ;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner:after{
+  background-color: red;
+}
+
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: red ;
+}
+
 button.ant-btn.submit {
   color: #fff;
   background-color: #068466;

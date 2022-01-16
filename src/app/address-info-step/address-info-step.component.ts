@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AddressInfoService} from "./address-info.service";
-import {AddressInfoReq, AddressInfoResp} from "./types";
+import {AddressInfoReq} from "./types";
 
 @Component({
   selector: 'app-address-info-step',

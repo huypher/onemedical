@@ -14,7 +14,7 @@
   </nz-form-item>
 
   <div class="checkbox-container">
-    <label nz-checkbox [(ngModel)]="downloadLinkChecked" formControlName="downloadLinkOption"></label>
+    <label nz-checkbox formControlName="downloadLinkOption"></label>
     <div style="width: 20px; height: 0px"></div>
     <div class="text-label">
       <p style="margin-bottom: 0.1em">Text me the link to download the app</p>
@@ -26,10 +26,13 @@
   <nz-form-item class="birthday-field">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YY" />
+        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YYYY" (ngModelChange)="birthdayValidator()" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+  <ng-template [ngIf]="!validBirthday && validBirthday !== undefined">
+    <p style="font-size: 0.8em; margin-bottom: 0.3em; color: red">Please enter a valid birthday in the format MM/DD/YYYY</p>
+  </ng-template>
   <p style="font-size: 0.8em; margin-bottom: 24px">Used to verify your identify before appointments</p>
 
   <div>Legal sex</div>
