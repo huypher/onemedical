@@ -66,6 +66,10 @@
   justify-content: space-between;
 }
 
+.email-field {
+  margin-bottom: 0.3em;
+}
+
 .submit-container {
   display: flex;
   flex-flow: row wrap;

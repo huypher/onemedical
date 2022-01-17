@@ -8,7 +8,7 @@
   <nz-form-item class="phone-number-field">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="phoneNumber" (ngModelChange)="phoneNumberValidator()"/>
+        <input type="text" nz-input formControlName="phoneNumber" (ngModelChange)="validatePhoneNumber()"/>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
@@ -29,7 +29,7 @@
   <nz-form-item class="birthday-field">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YYYY" (ngModelChange)="birthdayValidator()" />
+        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YYYY" (ngModelChange)="validateBirthday()" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

@@ -17,6 +17,7 @@ export class LoginInfoStepComponent implements OnInit {
   showPassword: boolean = false;
   validPassword: boolean = false;
   loading: boolean = false;
+  validEmail: boolean | undefined = undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -120,6 +121,12 @@ export class LoginInfoStepComponent implements OnInit {
     }
     self.noSequential = true
     return self.noSequential
+  }
+
+  validateEmail() {
+    this.validEmail = this.validateForm.value.email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )
   }
 
   allowSubmit() {

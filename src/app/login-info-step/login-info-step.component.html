@@ -40,13 +40,18 @@
   </ng-template>
 
   <label class="label">Email</label>
-  <nz-form-item>
-    <nz-form-control>
-      <nz-input-group>
-        <input type="text" nz-input formControlName="email" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
+  <div style="margin-bottom: 24px">
+    <nz-form-item class="email-field">
+      <nz-form-control>
+        <nz-input-group>
+          <input type="text" nz-input formControlName="email" (ngModelChange)="validateEmail()" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template [ngIf]="!validEmail && validEmail !== undefined">
+      <p style="font-size: 0.8em; color: red">Please enter a valid email.</p>
+    </ng-template>
+  </div>
 
   <label class="label">Create a password</label>
   <nz-form-item style="margin-bottom: 5px">

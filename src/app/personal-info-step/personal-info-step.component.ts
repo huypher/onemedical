@@ -30,7 +30,7 @@ export class PersonalInfoStepComponent implements OnInit {
     });
   }
 
-  birthdayValidator() {
+  validateBirthday() {
     if (moment(this.validateForm.value.birthday, 'MM/DD/YYYY', true).isValid()) {
       this.validBirthday = true
       return
@@ -38,7 +38,7 @@ export class PersonalInfoStepComponent implements OnInit {
     this.validBirthday = false
   }
 
-  phoneNumberValidator() {
+  validatePhoneNumber() {
     const phoneNumber: string = this.validateForm.value.phoneNumber
     this.validPhoneNumber = /^\d+$/.test(phoneNumber) && (phoneNumber.length == 10 ||
       phoneNumber.length == 11)
