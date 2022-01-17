@@ -24,8 +24,12 @@
       </app-personal-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-term *ngSwitchCase="'term'"  (done)="nextStep()">
-      </app-term>
+      <app-term-agreement-step *ngSwitchCase="'term-agreement-step'"  (done)="nextStep()">
+      </app-term-agreement-step>
+    </ng-container>
+    <ng-container [ngSwitch]="currentStep | async">
+      <app-success-registration *ngSwitchCase="'success-registration'">
+      </app-success-registration>
     </ng-container>
   </div>
   <div nz-col class="gutter-row" [nzSpan]="8"></div>

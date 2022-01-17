@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {PersonalInfoStepService} from "./personal-info-step.service";
 import {PersonalInfoReq} from "./types";
 import * as moment from 'moment';
+import {getLocalStorage} from "../core/util/local-storage";
+import {tokenKey} from '../constant';
 
 @Component({
   selector: 'app-personal-info-step',
@@ -53,9 +55,12 @@ export class PersonalInfoStepComponent implements OnInit {
       this.validPhoneNumber && this.validPhoneNumber !== undefined
   }
 
+  getToken(): string {
+    return localStorage.getItem('token') || ''
+  }
+
   submit(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
       const formValue: any = this.validateForm.value
       const body: PersonalInfoReq = {
         date_of_birth: formValue.date_of_birth,
@@ -63,9 +68,9 @@ export class PersonalInfoStepComponent implements OnInit {
         gender_details: formValue.gender_details,
         phone_number: formValue.phoneNumber,
       }
-      this.personalInfoService.postPersonalInfo(body).subscribe(
-        resp => console.log(resp),
-        error => {console.log(error); this.done.emit(true)}
+      this.personalInfoService.postPersonalInfo(body, getLocalStorage(tokenKey)).subscribe(
+        resp => this.done.emit(true),
+        error => console.log(error)
       )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

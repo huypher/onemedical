@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {ConfigService} from "../core/services/configs/config.service"
 import {HttpClient} from "@angular/common/http";
-import {AddressInfoReq, AddressInfoResp} from "./types";
+import {TermAgreementReq, TermAgreementResp} from "./types";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AddressInfoService {
+export class TermAgreementStepService {
   baseUrl: string = this.cfg.baseUrl
 
   constructor(
@@ -15,7 +15,7 @@ export class AddressInfoService {
     private cfg: ConfigService) {
   }
 
-  public postAddressInfo(body: AddressInfoReq, token: string) {
-    return this.httpClient.post<AddressInfoResp>(`${this.baseUrl}/register/address-info`, body, {headers: {token: token}, observe: `response`})
+  public postTermAgreement(body: TermAgreementReq, token: string) {
+    return this.httpClient.post<TermAgreementResp>(`${this.baseUrl}/register/term-agreement`, body, {headers: {token: token}, observe: `response`})
   }
 }

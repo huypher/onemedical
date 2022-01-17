@@ -1,10 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Iterator} from '../core/util/iterator'
+import {getLocalStorage} from "../core/util/local-storage";
+import {tokenKey} from '../constant';
 
 type Step = string | undefined
 
-const steps: Array<string> = ['login-info', 'address-info', 'personal-info', 'term', 'payment']
+const steps: Array<string> = ['login-info', 'address-info', 'personal-info', 'term-agreement-step', 'success-registration']
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +25,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   fromStep(): number {
-    return 3
+    const token = getLocalStorage(tokenKey)
+    if (token === '') {
+      return 0
+    }
+    return 1
   }
 
   nextStep() {

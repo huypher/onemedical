@@ -2,6 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AddressInfoService} from "./address-info.service";
 import {AddressInfoReq} from "./types";
+import {getLocalStorage} from "../core/util/local-storage";
+import {tokenKey} from '../constant';
+
 
 @Component({
   selector: 'app-address-info-step',
@@ -15,8 +18,9 @@ export class AddressInfoStepComponent implements OnInit {
   'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',
   'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska',
   'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon',
-  'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
+  'Paula', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
   'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'Armed Forces Americas', 'Armed Forces Europe/Middle East/Africa/Canada', 'Armed Forces Pacific']
+
   areas: Array<string> = ['SF Bay Area', 'New York', 'D.C. Metro Area (DMV)', 'Boston', 'Chicago', 'Los Angeles', 'Phoenix', 'Seattle', 'San Diego', 'Atlanta',
   'Portland', 'Orange County', 'Austin', 'Raleigh-Durham', 'Columbus', 'Houston', 'Alabama', 'Kansas City']
 
@@ -41,7 +45,6 @@ export class AddressInfoStepComponent implements OnInit {
 
   submit(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
       const formValue: any = this.validateForm.value
       const body: AddressInfoReq =
         {
@@ -54,9 +57,9 @@ export class AddressInfoStepComponent implements OnInit {
           },
           service_area_code: formValue.area
         }
-      this.addressInfoService.postAddressInfo(body).subscribe(
-        resp => console.log(resp),
-        error => {console.log(error); this.done.emit(true)}
+      this.addressInfoService.postAddressInfo(body, getLocalStorage(tokenKey)).subscribe(
+        resp => this.done.emit(true),
+        error => console.log(error)
       )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

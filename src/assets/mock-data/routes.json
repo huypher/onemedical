@@ -1,0 +1,6 @@
+{
+  "/register/login-info": "/login-info",
+  "/register/address-info": "/address-info",
+  "/register/personal-info": "/personal-info",
+  "/register/term-agreement": "/term-agreement"
+}
