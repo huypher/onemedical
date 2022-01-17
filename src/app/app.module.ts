@@ -25,6 +25,8 @@ import {AddressInfoStepComponent} from "./address-info-step/address-info-step.co
 import {PersonalInfoStepComponent} from "./personal-info-step/personal-info-step.component";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzRadioModule} from "ng-zorro-antd/radio";
+import { TermComponent } from './term/term.component';
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
 
 registerLocaleData(en);
 
@@ -35,6 +37,7 @@ registerLocaleData(en);
     LoginInfoStepComponent,
     AddressInfoStepComponent,
     PersonalInfoStepComponent,
+    TermComponent,
   ],
     imports: [
         BrowserModule,
@@ -54,6 +57,7 @@ registerLocaleData(en);
         NzSpaceModule,
         NzCheckboxModule,
         NzRadioModule,
+        NzCollapseModule,
     ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Iterator} from '../core/util/iterator'
 
@@ -12,6 +12,7 @@ const steps: Array<string> = ['login-info', 'address-info', 'personal-info', 'te
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   percent: number = 0;
   currentStep: BehaviorSubject<Step> = new BehaviorSubject<Step>(undefined)
   stepIterator: Iterator<Step> = new Iterator<Step>(this.fromStep(), steps)
@@ -22,7 +23,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   fromStep(): number {
-    return 0
+    return 3
   }
 
   nextStep() {

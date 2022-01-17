@@ -1,0 +1,63 @@
+<br>
+<div class="text-center">
+  <h2>Terms of Service, Privacy Policy, and HIPAA Notice</h2>
+  <p>In order to join One Medical, you must agree to the terms below.</p>
+</div>
+<br>
+<p style="font-weight: bold">I am at least18 years of age and I have read and accept:</p>
+<nz-collapse>
+  <nz-collapse-panel
+    [nzHeader]="'Membership Terms of Service'"
+    [nzActive]="false"
+    [nzDisabled]="false"
+    [nzExtra]="checkbox1"
+  >
+  <ng-template #checkbox1>
+    <label nz-checkbox [(ngModel)]="memberShipTerm"></label>
+  </ng-template>
+    <p>Content</p>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel
+    [nzHeader]="'Medical Terms of Service'"
+    [nzActive]="false"
+    [nzDisabled]="false"
+    [nzExtra]="checkbox2"
+  >
+    <ng-template #checkbox2>
+      <label nz-checkbox [(ngModel)]="medicalTerm"></label>
+    </ng-template>
+    <p>Content</p>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel
+    [nzHeader]="'Privacy Policy'"
+    [nzActive]="false"
+    [nzDisabled]="false"
+    [nzExtra]="checkbox3"
+  >
+    <ng-template #checkbox3>
+      <label nz-checkbox [(ngModel)]="privacyPolicyTerm"></label>
+    </ng-template>
+    <p>Content</p>
+  </nz-collapse-panel>
+</nz-collapse>
+
+<p style="font-weight: bold; margin-top: 24px">I acknowledge receipt of the following:</p>
+<nz-collapse>
+  <nz-collapse-panel
+    [nzHeader]="'Notice of HIPAA Privacy Practices'"
+    [nzActive]="false"
+    [nzDisabled]="false"
+    [nzExtra]="checkbox4"
+  >
+    <ng-template #checkbox4>
+      <label nz-checkbox [(ngModel)]="noticePolicyTerm"></label>
+    </ng-template>
+    <p>Content</p>
+  </nz-collapse-panel>
+</nz-collapse>
+
+<div class="submit-container">
+  <button nz-button class="submit" [disabled]="!allowSubmit()" (click)="submit()">Next</button>
+</div>

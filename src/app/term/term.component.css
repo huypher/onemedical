@@ -1,38 +1,7 @@
-.personal-info-step-form {
-  display: flex;
-  flex-flow: column wrap;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
-
-.checkbox-container {
-  display: flex;
-  flex-flow: row wrap;
-  margin-bottom: 24px;
-}
-
-.birthday-field {
-  margin-bottom: 0.3em;
-}
-
-.gender-info-field {
-  margin-bottom: 0.3em;
-}
-
-.phone-number-field {
-  margin-bottom: 0.5em;
-}
-
-[nz-radio] {
-  display: block;
-  height: 32px;
-  line-height: 5px;
-}
-
 .submit-container {
   display: flex;
   flex-flow: row-reverse wrap;
+  margin-top: 24px;
 }
 
 button.ant-btn.submit {

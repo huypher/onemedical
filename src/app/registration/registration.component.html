@@ -23,6 +23,10 @@
       <app-personal-info-step *ngSwitchCase="'personal-info'"  (done)="nextStep()">
       </app-personal-info-step>
     </ng-container>
+    <ng-container [ngSwitch]="currentStep | async">
+      <app-term *ngSwitchCase="'term'"  (done)="nextStep()">
+      </app-term>
+    </ng-container>
   </div>
   <div nz-col class="gutter-row" [nzSpan]="8"></div>
 </div>
