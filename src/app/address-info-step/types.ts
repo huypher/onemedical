@@ -9,4 +9,8 @@ export interface AddressInfoReq {
   service_area_code: string
 }
 
-export interface AddressInfoResp {}
+export interface AddressInfoResp {
+  verdict: string;
+  message: string;
+  data: any;
+}

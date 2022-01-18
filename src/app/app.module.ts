@@ -29,6 +29,8 @@ import { TermAgreementStepComponent } from './term-agreement-step/term-agreement
 import {NzCollapseModule} from "ng-zorro-antd/collapse";
 import { SuccessRegistrationComponent } from './success-registration/success-registration.component';
 import {NzResultModule} from "ng-zorro-antd/result";
+import {RerenderDirective} from "./rerender.directive";
+import {httpInterceptorProviders} from "./core/services/http/interceptor-provider";
 
 registerLocaleData(en);
 
@@ -41,6 +43,7 @@ registerLocaleData(en);
     PersonalInfoStepComponent,
     TermAgreementStepComponent,
     SuccessRegistrationComponent,
+    RerenderDirective,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,7 @@ registerLocaleData(en);
     NzCollapseModule,
     NzResultModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

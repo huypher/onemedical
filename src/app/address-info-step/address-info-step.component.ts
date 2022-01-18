@@ -57,9 +57,9 @@ export class AddressInfoStepComponent implements OnInit {
           },
           service_area_code: formValue.area
         }
-      this.addressInfoService.postAddressInfo(body, getLocalStorage(tokenKey)).subscribe(
+      this.addressInfoService.postAddressInfo(body).subscribe(
         resp => this.done.emit(true),
-        error => console.log(error)
+        error =>  this.done.emit(false),
       )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

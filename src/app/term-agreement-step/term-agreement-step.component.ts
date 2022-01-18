@@ -25,9 +25,9 @@ export class TermAgreementStepComponent {
   submit() {
     if (this.allowSubmit()) {
       const body: TermAgreementReq = {term_accepted: true}
-      this.termAgreementService.postTermAgreement(body, getLocalStorage(tokenKey)).subscribe(
+      this.termAgreementService.postTermAgreement(body).subscribe(
         resp => this.done.emit(true),
-        error => console.log(error)
+        error =>  this.done.emit(false),
       )
     }
   }

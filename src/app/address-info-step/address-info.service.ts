@@ -15,7 +15,7 @@ export class AddressInfoService {
     private cfg: ConfigService) {
   }
 
-  public postAddressInfo(body: AddressInfoReq, token: string) {
-    return this.httpClient.post<AddressInfoResp>(`${this.baseUrl}/register/address-info`, body, {headers: {token: token}, observe: `response`})
+  public postAddressInfo(body: AddressInfoReq) {
+    return this.httpClient.post<AddressInfoResp>(`${this.baseUrl}/register/address-info`, body, {observe: `response`})
   }
 }

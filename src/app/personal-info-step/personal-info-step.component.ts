@@ -55,22 +55,19 @@ export class PersonalInfoStepComponent implements OnInit {
       this.validPhoneNumber && this.validPhoneNumber !== undefined
   }
 
-  getToken(): string {
-    return localStorage.getItem('token') || ''
-  }
-
   submit(): void {
     if (this.validateForm.valid) {
       const formValue: any = this.validateForm.value
       const body: PersonalInfoReq = {
-        date_of_birth: formValue.date_of_birth,
+        date_of_birth: formValue.birthday,
+        download_link_option: formValue.downloadLinkOption,
         gender: formValue.gender,
-        gender_details: formValue.gender_details,
+        gender_details: formValue.genderInfo,
         phone_number: formValue.phoneNumber,
       }
-      this.personalInfoService.postPersonalInfo(body, getLocalStorage(tokenKey)).subscribe(
+      this.personalInfoService.postPersonalInfo(body).subscribe(
         resp => this.done.emit(true),
-        error => console.log(error)
+        error =>  this.done.emit(false),
       )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

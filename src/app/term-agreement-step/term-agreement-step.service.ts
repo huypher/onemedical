@@ -15,7 +15,7 @@ export class TermAgreementStepService {
     private cfg: ConfigService) {
   }
 
-  public postTermAgreement(body: TermAgreementReq, token: string) {
-    return this.httpClient.post<TermAgreementResp>(`${this.baseUrl}/register/term-agreement`, body, {headers: {token: token}, observe: `response`})
+  public postTermAgreement(body: TermAgreementReq) {
+    return this.httpClient.post<TermAgreementResp>(`${this.baseUrl}/register/term-agreement`, body, {observe: `response`})
   }
 }

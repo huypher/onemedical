@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Iterator} from '../core/util/iterator'
-import {getLocalStorage} from "../core/util/local-storage";
-import {tokenKey} from '../constant';
+import {getLocalStorage, saveLocalStorageWithExpire} from "../core/util/local-storage";
+import {stepKey, tokenKey, ttl} from '../constant';
 
 type Step = string | undefined
 
@@ -14,29 +14,34 @@ const steps: Array<string> = ['login-info', 'address-info', 'personal-info', 'te
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   percent: number = 0;
   currentStep: BehaviorSubject<Step> = new BehaviorSubject<Step>(undefined)
   stepIterator: Iterator<Step> = new Iterator<Step>(this.fromStep(), steps)
   percentUnit: number = 100/steps.length
+  rerender: boolean = false
 
   ngOnInit(): void {
-    this.nextStep()
+    this.nextStep(true)
   }
 
   fromStep(): number {
-    const token = getLocalStorage(tokenKey)
-    if (token === '') {
+    const step = getLocalStorage(stepKey)
+    if (step === '') {
       return 0
     }
-    return 1
+    return steps.findIndex(e => e === step)
   }
 
-  nextStep() {
+  nextStep(done: boolean) {
+    if (!done) {
+      this.rerender = !this.rerender
+      return
+    }
     const nextStep =  this.stepIterator.next()
     if (nextStep != undefined) {
       this.currentStep.next(nextStep.state)
       this.percent = (nextStep.idx+1) * this.percentUnit
+      saveLocalStorageWithExpire(stepKey, nextStep?.state || '', ttl)
     }
   }
 }

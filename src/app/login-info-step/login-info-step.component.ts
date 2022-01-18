@@ -2,8 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {LoginInfoService} from "./login-info.service";
 import {LoginInfoReq} from "./types";
+import {tokenKey, ttl} from "../constant";
 import {saveLocalStorageWithExpire} from "../core/util/local-storage";
-import {tokenKey} from '../constant';
 
 type Rule = (self: any, pwd: string) => boolean
 
@@ -148,10 +148,15 @@ export class LoginInfoStepComponent implements OnInit {
         }
       this.loginInfoService.postLoginInfo(body).subscribe(
         resp => {
-          saveLocalStorageWithExpire(tokenKey, resp.body?.token || '')
+          const token = resp.body?.data?.token
+          if (token === '' || token === undefined) {
+            this.done.emit(false)
+            return
+          }
+          saveLocalStorageWithExpire(tokenKey, token, ttl)
           this.done.emit(true)
         },
-        error => console.log(error)
+        error =>  this.done.emit(false)
       )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {

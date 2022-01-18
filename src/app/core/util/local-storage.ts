@@ -1,14 +1,13 @@
-import {ttl} from '../../constant'
-
-export function saveLocalStorageWithExpire(key: string, value: string) {
+export function saveLocalStorageWithExpire(key: string, value: string, expire: number) {
   if (value === '') {
     return
   }
   const now = new Date()
   const item = {
     value: value,
-    expiry: now.getTime() + ttl,
+    expiry: now.getTime() + expire,
   }
+  console.log("save local storage with key:", key, "value:", value)
   localStorage.setItem(key, JSON.stringify(item))
 }
 

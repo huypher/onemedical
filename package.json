@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "server": "json-server --watch ./src/assets/mock-data/server.json --routes ./src/assets/mock-data/routes.json --middlewares ./src/assets/mock-data/middleware.js --port 8000"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {

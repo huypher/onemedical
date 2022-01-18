@@ -15,7 +15,8 @@ export class PersonalInfoStepService {
     private cfg: ConfigService) {
   }
 
-  public postPersonalInfo(body: PersonalInfoReq, token: string) {
-    return this.httpClient.post<PersonalInfoResp>(`${this.baseUrl}/register/personal-info`, body, {headers: {token: token}, observe: `response`})
+  public postPersonalInfo(body: PersonalInfoReq) {
+    console.log("request personal info:", body)
+    return this.httpClient.post<PersonalInfoResp>(`${this.baseUrl}/register/personal-info`, body, {observe: `response`})
   }
 }

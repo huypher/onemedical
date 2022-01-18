@@ -7,6 +7,9 @@ export interface LoginInfoReq {
 }
 
 export interface LoginInfoResp {
-  data: any;
-  token: string;
+  verdict: string;
+  message: string;
+  data: {
+    token: string;
+  };
 }

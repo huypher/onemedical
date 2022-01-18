@@ -10,21 +10,21 @@
 
 <div nz-row class="layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
   <div nz-col class="gutter-row" [nzSpan]="8"></div>
-  <div nz-col class="gutter-row" [nzSpan]="8">
+  <div nz-col class="gutter-row" [nzSpan]="8" *rerender="rerender">
     <ng-container [ngSwitch]="currentStep | async">
-      <app-login-info-step *ngSwitchCase="'login-info'" (done)="nextStep()">
+      <app-login-info-step *ngSwitchCase="'login-info'" (done)="nextStep($event)">
       </app-login-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-address-info-step *ngSwitchCase="'address-info'" (done)="nextStep()">
+      <app-address-info-step *ngSwitchCase="'address-info'" (done)="nextStep($event)">
       </app-address-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-personal-info-step *ngSwitchCase="'personal-info'"  (done)="nextStep()">
+      <app-personal-info-step *ngSwitchCase="'personal-info'"  (done)="nextStep($event)">
       </app-personal-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-term-agreement-step *ngSwitchCase="'term-agreement-step'"  (done)="nextStep()">
+      <app-term-agreement-step *ngSwitchCase="'term-agreement-step'"  (done)="nextStep($event)">
       </app-term-agreement-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
