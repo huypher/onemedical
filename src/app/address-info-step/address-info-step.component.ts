@@ -52,7 +52,7 @@ export class AddressInfoStepComponent implements OnInit {
             address1: formValue.address1,
             address2: formValue.address2,
             city  : formValue.city,
-            state_code: formValue.state_code,
+            state_code: formValue.state,
             zip: formValue.zipcode,
           },
           service_area_code: formValue.area
