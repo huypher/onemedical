@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Iterator} from '../core/util/iterator'
-import {getLocalStorage, saveLocalStorageWithExpire} from "../core/util/local-storage";
+import {delLocalStorage, getLocalStorage, saveLocalStorageWithExpire} from "../core/util/local-storage";
 import {stepKey, tokenKey, ttl} from '../constant';
 
 type Step = string | undefined
 
 const steps: Array<string> = ['login-info', 'address-info', 'personal-info', 'term-agreement-step', 'success-registration']
+const RegistrationRestartStep : string = 'registration-restart'
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +22,12 @@ export class RegistrationComponent implements OnInit {
   rerender: boolean = false
 
   ngOnInit(): void {
-    this.nextStep(true)
+    const init = this.fromStep()
+    if (init == 0) {
+      this.nextStep(true)
+      return
+    }
+    this.currentStep.next(RegistrationRestartStep)
   }
 
   fromStep(): number {
@@ -43,5 +49,16 @@ export class RegistrationComponent implements OnInit {
       this.percent = (nextStep.idx+1) * this.percentUnit
       saveLocalStorageWithExpire(stepKey, nextStep?.state || '', ttl)
     }
+  }
+
+  restart(ok: boolean) {
+    if (!ok) {
+      this.nextStep(true)
+      return
+    }
+    delLocalStorage(tokenKey)
+    delLocalStorage(stepKey)
+    this.stepIterator.reset()
+    this.nextStep(true)
   }
 }

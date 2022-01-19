@@ -7,7 +7,6 @@ export function saveLocalStorageWithExpire(key: string, value: string, expire: n
     value: value,
     expiry: now.getTime() + expire,
   }
-  console.log("save local storage with key:", key, "value:", value)
   localStorage.setItem(key, JSON.stringify(item))
 }
 
@@ -23,4 +22,8 @@ export function getLocalStorage(key: string): string {
     return ''
   }
   return item.value
+}
+
+export function delLocalStorage(key: string) {
+  localStorage.removeItem(key)
 }

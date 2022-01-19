@@ -16,7 +16,6 @@ export class PersonalInfoStepService {
   }
 
   public postPersonalInfo(body: PersonalInfoReq) {
-    console.log("request personal info:", body)
     return this.httpClient.post<PersonalInfoResp>(`${this.baseUrl}/register/personal-info`, body, {observe: `response`})
   }
 }

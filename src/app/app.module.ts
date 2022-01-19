@@ -31,6 +31,7 @@ import { SuccessRegistrationComponent } from './success-registration/success-reg
 import {NzResultModule} from "ng-zorro-antd/result";
 import {RerenderDirective} from "./rerender.directive";
 import {httpInterceptorProviders} from "./core/services/http/interceptor-provider";
+import { RegistrationRestartComponent } from './registration-restart/registration-restart.component';
 
 registerLocaleData(en);
 
@@ -44,6 +45,7 @@ registerLocaleData(en);
     TermAgreementStepComponent,
     SuccessRegistrationComponent,
     RerenderDirective,
+    RegistrationRestartComponent,
   ],
   imports: [
     BrowserModule,

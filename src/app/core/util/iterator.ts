@@ -16,4 +16,8 @@ export class Iterator<T> {
     }
     return {state: this.data[this.idx], idx: this.idx}
   }
+
+  reset() {
+    this.idx = -1
+  }
 }
