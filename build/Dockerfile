@@ -3,6 +3,7 @@ FROM node:14-alpine3.14 as builder
 WORKDIR /app
 
 COPY package.json ./
+
 RUN npm i
 
 COPY . .
