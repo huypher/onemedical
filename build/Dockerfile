@@ -1,28 +1,17 @@
-FROM node:12.13-alpine As development
+FROM node:14-alpine3.14 as builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm install --only=development
-
-COPY . .
-
-RUN npm run build
-
-FROM node:12.13-alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install --only=production
+COPY package.json ./
+RUN npm i
 
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
+RUN  npm run build --prod
 
-CMD ["node", "dist/main"]
+FROM nginx:1.17.1-alpine as deploy
+
+COPY --from=builder /app/build/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/dist/onemedical /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
