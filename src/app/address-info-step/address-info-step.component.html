@@ -6,13 +6,24 @@
   </div>
   <br>
   <label class="label">Home address</label>
-  <nz-form-item>
+  <nz-form-item [style]="!address1Validator && address1Validator !== undefined ? 'margin-bottom: 5px' : 'margin-bottom: 24px'">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="address1" placeholder="123 One Medical St." />
+        <input
+          #address1
+          id="address1"
+          (ngModelChange)="inputChange(address1.id)"
+          type="text"
+          nz-input
+          formControlName="address1"
+          placeholder="123 One Medical St." />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+  <ng-template [ngIf]="!address1Validator && address1Validator !== undefined">
+    <label style="color: red; margin-bottom: 24px;">Please enter a valid address</label>
+  </ng-template>
+
   <nz-form-item>
     <nz-form-control>
       <nz-input-group>
@@ -22,33 +33,51 @@
   </nz-form-item>
 
   <label class="label">City</label>
-  <nz-form-item>
+  <nz-form-item [style]="!cityValidator && cityValidator !== undefined ? 'margin-bottom: 5px' : 'margin-bottom: 24px'">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="city" />
+        <input
+          #city
+          id="city"
+          (ngModelChange)="inputChange(city.id)"
+          type="text"
+          nz-input
+          formControlName="city" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+  <ng-template [ngIf]="!cityValidator && cityValidator !== undefined">
+    <label style="color: red; margin-bottom: 24px;">Please enter a city</label>
+  </ng-template>
 
   <div class="state-zipcode">
     <div class="state">
       <label class="label">State</label>
       <nz-select nzAllowClear nzPlaceHolder="-- Select state --" formControlName="state">
         <ng-container *ngFor="let state of states">
-          <nz-option nzLabel="{{state}}" nzValue="{{state}}"></nz-option>
+          <nz-option nzLabel="{{state}}" nzValue="{{state}}" ></nz-option>
         </ng-container>
       </nz-select>
     </div>
 
     <div class="zipcode">
       <label class="label">ZIP code</label>
-      <nz-form-item>
+      <nz-form-item [style]="!zipCodeValidator && zipCodeValidator !== undefined ? 'margin-bottom: 5px' : 'margin-bottom: 24px'">
         <nz-form-control>
           <nz-input-group>
-            <input type="text" nz-input formControlName="zipcode" />
+            <input
+              #zipcode
+              id="zipcode"
+              (ngModelChange)="inputChange(zipcode.id)"
+              type="text"
+              nz-input
+              formControlName="zipcode" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
+      <ng-template [ngIf]="!zipCodeValidator && zipCodeValidator !== undefined">
+        <label style="color: red; margin-bottom: 24px;">Please enter ZIP code</label>
+      </ng-template>
     </div>
   </div>
 
@@ -61,6 +90,14 @@
   <br>
 
   <div class="submit-container">
-    <button nz-button class="submit" [disabled]="!allowSubmit()" (click)="submit()">Next</button>
+    <button
+      nz-button
+      class="submit"
+      [disabled]="!allowSubmit()"
+      (click)="submitWithDelay()"
+      [nzLoading]="loading"
+    >
+      {{loading ? '' : 'Next'}}
+    </button>
   </div>
 </form>

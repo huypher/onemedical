@@ -63,9 +63,31 @@ input {
 }
 
 input:hover {
-  border: 1px solid #07a57f;
+  border: 1px solid #15f4bf;
 }
 
 input:focus {
-  border: 2px solid #07a57f;
+  border: 2px solid #15f4bf;
+}
+
+::ng-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  height: calc(3.3125rem + 2px);
+  align-items: center;
+  font-size: 15px;
+}
+
+::ng-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector:hover {
+  height: calc(3.3125rem + 2px);
+  align-items: center;
+  font-size: 15px;
+  border: 1px solid #15f4bf;
+}
+
+::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 1px solid #15f4bf;
+}
+
+::ng-deep .anticon-spin {
+  width: 2em;
+  height: 2em;
 }

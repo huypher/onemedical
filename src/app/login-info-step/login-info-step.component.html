@@ -173,7 +173,7 @@
       nz-button
       class="submit"
       [disabled]="!allowSubmit()"
-      (click)="submit()"
+      (click)="submitWithDelay()"
       [nzLoading]="loading"
     >
       {{loading ? '' : 'Next'}}

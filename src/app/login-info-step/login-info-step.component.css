@@ -109,11 +109,11 @@ input {
 }
 
 input:hover {
-  border: 1px solid #07a57f;
+  border: 1px solid #15f4bf;
 }
 
 input:focus {
-  border: 2px solid #07a57f;
+  border: 2px solid #15f4bf;
 }
 
 .ant-form-item {
@@ -136,4 +136,9 @@ input.invalid-pwd {
   right: 16px;
   top: 15px;
   z-index: 1;
+}
+
+::ng-deep .anticon-spin {
+  width: 2em;
+  height: 2em;
 }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {LoginInfoService} from "./login-info.service";
 import {LoginInfoReq} from "./types";
-import {tokenKey, ttl} from "../constant";
+import {loadingTime, tokenKey, ttl} from "../constant";
 import {saveLocalStorageWithExpire} from "../core/util/local-storage";
 
 type Rule = (self: any, pwd: string) => boolean
@@ -39,22 +39,23 @@ export class LoginInfoStepComponent implements OnInit {
   }
 
   inputChange(id: string) {
-      switch (id) {
-        case "firstName":
-          this.firstNameValidator = this.validateForm.value.length !== 0;
-          break;
-        case "lastName":
-          this.lastNameValidator = this.validateForm.value.length !== 0
-          break;
-        case "email":
-          this.emailValidator = this.validateForm.value.length !== 0 && this.validateForm.value.email.match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-          break;
-        case "password":
-          this.validatePasswordFormat();
-          break;
-      }
+    const formValue = this.validateForm.value
+    switch (id) {
+      case "firstName":
+        this.firstNameValidator = formValue.firstName.length !== 0;
+        break;
+      case "lastName":
+        this.lastNameValidator = formValue.lastName.length !== 0
+        break;
+      case "email":
+        this.emailValidator = formValue.email.length !== 0 && formValue.email.match(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+        break;
+      case "password":
+        this.validatePasswordFormat();
+        break;
+    }
   }
 
   showPreferredName() {
@@ -97,29 +98,10 @@ export class LoginInfoStepComponent implements OnInit {
     return this.validateForm.valid && this.validPassword
   }
 
-  submit(): void {
-    if (this.validateForm.valid && this.validPassword) {
+  submitWithDelay() {
+    if (this.validateForm.valid) {
       this.loading = true
-      const formValue: any = this.validateForm.value
-      const body: LoginInfoReq = {
-          first_name: formValue.firstName,
-          last_name: formValue.lastName,
-          preferred_name: formValue.preferredName,
-          email: formValue.email,
-          password: formValue.password,
-        }
-      this.loginInfoService.postLoginInfo(body).subscribe(
-        resp => {
-          const token = resp.body?.data?.token
-          if (token === '' || token === undefined) {
-            this.done.emit(false)
-            return
-          }
-          saveLocalStorageWithExpire(tokenKey, token, ttl)
-          this.done.emit(true)
-        },
-        error =>  this.done.emit(false)
-      )
+      setTimeout(() => this.submit(), loadingTime)
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -128,5 +110,29 @@ export class LoginInfoStepComponent implements OnInit {
         }
       });
     }
+  }
+
+  submit(): void {
+    this.loading = true
+    const formValue: any = this.validateForm.value
+    const body: LoginInfoReq = {
+      first_name: formValue.firstName,
+      last_name: formValue.lastName,
+      preferred_name: formValue.preferredName,
+      email: formValue.email,
+      password: formValue.password,
+    }
+    this.loginInfoService.postLoginInfo(body).subscribe(
+      resp => {
+        const token = resp.body?.data?.token
+        if (token === '' || token === undefined) {
+          this.done.emit(false)
+          return
+        }
+        saveLocalStorageWithExpire(tokenKey, token, ttl)
+        this.done.emit(true)
+      },
+      error =>  this.done.emit(false)
+    )
   }
 }
