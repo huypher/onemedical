@@ -6,3 +6,10 @@
   margin-top: 0.3em;
   margin-bottom: 0.3em;
 }
+
+.page-logo {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}

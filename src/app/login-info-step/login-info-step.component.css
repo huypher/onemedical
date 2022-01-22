@@ -15,14 +15,21 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 .first-name {
   width: 48%;
+  display: flex;
+  flex-flow: column wrap;
+  max-height: 124px;
 }
 
 .last-name {
   width: 48%;
+  display: flex;
+  flex-flow: column wrap;
+  max-height: 124px;
 }
 
 .preferred-name {
@@ -60,12 +67,6 @@
   height: 9px;
 }
 
-.pwd-visibility {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-
 .email-field {
   margin-bottom: 0.3em;
 }
@@ -101,4 +102,38 @@ button.submit:hover {
 button.ant-btn.submit:disabled {
   opacity: .65;
   cursor: not-allowed;
+}
+
+input {
+  height: calc(3.3125rem + 2px);
+}
+
+input:hover {
+  border: 1px solid #07a57f;
+}
+
+input:focus {
+  border: 2px solid #07a57f;
+}
+
+.ant-form-item {
+  margin-bottom: 5px;
+}
+
+input.invalid-pwd {
+  border: 1px solid red;
+}
+
+.pwd-wrapper {
+  position: relative;
+}
+
+.toggle-pw-visibility {
+  cursor: pointer;
+  color: #0358b2;
+  font-size: 1rem;
+  position: absolute;
+  right: 16px;
+  top: 15px;
+  z-index: 1;
 }

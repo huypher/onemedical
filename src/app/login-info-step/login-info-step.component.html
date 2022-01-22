@@ -1,6 +1,7 @@
 
 <form nz-form [formGroup]="validateForm" class="login-info-step-form">
   <br>
+  <br>
   <div class="text-center">
     <h1>Join One Medical</h1>
     <p>It just takes a few minutes to sign up and get fast, easy access to care, 24/7. No need for your insurance card</p>
@@ -8,20 +9,46 @@
   <br>
   <label class="label">Full name</label>
   <div class="field-name">
-    <nz-form-item class="first-name">
-      <nz-form-control>
-        <nz-input-group>
-          <input type="text" nz-input formControlName="firstName" placeholder="First name" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item class="last-name">
-      <nz-form-control>
-        <nz-input-group>
-          <input type="text" nz-input formControlName="lastName" placeholder="Last name" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
+    <div class="first-name">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <input
+              #firstName
+              type="text"
+              nz-input
+              id="firstName"
+              (ngModelChange)="inputChange(firstName.id)"
+              formControlName="firstName"
+              placeholder="First name"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <ng-template [ngIf]="!firstNameValidator && firstNameValidator !== undefined">
+        <label style="color: red; margin-bottom: 35px;">Please enter your first name</label>
+      </ng-template>
+    </div>
+
+    <div  class="last-name">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <input
+              #lastName
+              type="text"
+              nz-input
+              id="lastName"
+              (ngModelChange)="inputChange(lastName.id)"
+              formControlName="lastName"
+              placeholder="Last name" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <ng-template [ngIf]="!lastNameValidator && lastNameValidator !== undefined">
+        <label style="color: red; margin-bottom: 35px;">Please enter your last name</label>
+      </ng-template>
+    </div>
   </div>
 
   <ng-template [ngIf]="preferredName"; [ngIfElse]="hiddenPreferredName">
@@ -44,53 +71,74 @@
     <nz-form-item class="email-field">
       <nz-form-control>
         <nz-input-group>
-          <input type="text" nz-input formControlName="email" (ngModelChange)="validateEmail()" />
+          <input
+            #email
+            type="text"
+            id="email"
+            nz-input
+            formControlName="email"
+            (ngModelChange)="inputChange(email.id)" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
-    <ng-template [ngIf]="!validEmail && validEmail !== undefined">
-      <p style="font-size: 0.8em; color: red">Please enter a valid email.</p>
+    <ng-template [ngIf]="!emailValidator && emailValidator !== undefined">
+      <label style="color: red; margin-bottom: 35px;">Please enter a valid email.</label>
     </ng-template>
   </div>
 
   <label class="label">Create a password</label>
-  <nz-form-item style="margin-bottom: 5px">
-    <nz-form-control>
-      <nz-input-group>
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          nz-input
-          formControlName="password"
-          (ngModelChange)="validatePasswordFormat()"
-        />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="pwd-wrapper">
+    <nz-form-item style="margin-bottom: 5px">
+      <nz-form-control>
+        <nz-input-group>
+          <input
+            #password
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            nz-input
+            formControlName="password"
+            (ngModelChange)="inputChange(password.id)"
+            [class]="!passwordValidator && passwordValidator !== undefined ? 'invalid-pwd' : 'valid-pwd'"
+          />
+        </nz-input-group>
+      </nz-form-control>
+      <ng-template [ngIf]="!showPassword">
+        <span class="toggle-pw-visibility" (click)="togglePassword()">
+        <svg viewBox="0 0 21 14" xmlns="http://www.w3.org/2000/svg" width="22" height="14">
+          <path d="M8.526 6.64a1.5 1.5 0 0 0 2.115-2.115A2.5 2.5 0 1 1 8.525 6.64zM11 0c5.281 0 10.01 5.89 10.01 5.89.546.613.566 1.625.014 2.25 0 0-4.441 5.86-10.024 5.86C5.415 14 .976 8.14.976 8.14c-.54-.63-.542-1.643.029-2.265C1.005 5.875 5.716 0 11 0zm0 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10z" fill-rule="evenodd" fill="#0358b2"></path>
+        </svg>
+        Show
+      </span>
+      </ng-template>
+      <ng-template [ngIf]="showPassword">
+        <span _ngcontent-ddo-c289="" class="toggle-pw-visibility" (click)="togglePassword()">
+          <svg fill="none" viewBox="0 0 24 15" xmlns="http://www.w3.org/2000/svg" width="24" height="15">
+          <path clip-rule="evenodd" d="m20.6331 6.89043.0079-.14888.3775-.28036c.0517-.03834.0815-.09636.0815-.16119 0-.06763-.0327-.12815-.0882-.16596l-.115-.07843-.0893-.10687c-2.6305-3.14985-5.3648-4.77065-8.2302-4.93556-.1251-.00877-.2509-.01318-.3773-.01318-.0187.00002-.0187.00002-.0498.00014-.0241-.00012-.0241-.00012-.0482-.00014-3.01042 0-5.98529 1.65668-8.93948 5.0547l-.09426.0948c-.04383.03854-.06826.0914-.06826.1505 0 .06872.03387.13021.09082.16773l.10266.06764.08322.09049c2.85753 3.1071 5.66226 4.73684 8.4261 4.95124.1644.0152.3303.0229.4972.0229.0218 0 .0218 0 .0584-.0002.0272.0002.0272.0002.0545.0002 2.8687 0 5.6354-1.542 8.3202-4.70957z" fill-rule="evenodd" stroke-width="2" stroke="#0358B2"></path>
+          <path d="m23 0h-21v7h21z" fill="#fff"></path>
+          <g fill="#0358B2">
+            <path d="m13 12c0-.5523-.4477-1-1-1s-1 .4477-1 1v2c0 .5523.4477 1 1 1s1-.4477 1-1z"></path>
+            <path clip-rule="evenodd" d="m20.0688 7.48301-.3688.37756c-1.4712.61149-1.9337.61149-1.3874 0 .5189-.58095.8932-1.13157 1.1228-1.65188.0385-.18382.129-.35891.2717-.50161.3905-.39053 1.0237-.39053 1.4142 0l2.1213 2.12132c.3906.39052.3906 1.02369 0 1.41421-.3905.39053-1.0236.39053-1.4142 0z" fill-rule="evenodd"></path>
+            <path clip-rule="evenodd" d="m4.47098 6.06002c.14202.26313.41919.64312.83151 1.13995.49795.6.2947.88172-.60974.84517l-.6872-.68676-1.88423 1.88423c-.39052.39053-1.02369.39053-1.414212 0-.390524-.39052-.390524-1.02369 0-1.41421l2.121322-2.12132c.39052-.39053 1.02369-.39053 1.41421 0 .1036.10359.17971.22426.22834.35294z" fill-rule="evenodd"></path>
+            <path d="m8.24264 11.1213c.39053-.3905.39053-1.0237 0-1.41419-.39052-.39053-1.02368-.39053-1.41421 0l-2.12132 2.12129c-.39052.3906-.39052 1.0237 0 1.4142.39052.3906 1.02369.3906 1.41421 0z"></path>
+            <path d="m17.8284 13.2426c.3906.3906 1.0237.3906 1.4142 0 .3906-.3905.3906-1.0237 0-1.4142l-1.4142-1.4142c-.3905-.3905-1.0237-.3905-1.4142 0s-.3905 1.0237 0 1.4142z"></path>
+          </g>
+        </svg>
+        Hide
+        </span>
+      </ng-template>
+    </nz-form-item>
+  </div>
 
   <div class="pwd-requirements">
-    <div class="pwd-visibility">
-      <nz-space>
-        <ng-template [ngIf]="pwdLen">
-          <div *nzSpaceItem class="checkmark">
-            <svg viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
-              <polygon points="5 12 0 7 2 5 5 8 13 0 15 2" fill="#068466"></polygon>
-            </svg>
-          </div>
-        </ng-template>
-        <div *nzSpaceItem [ngClass]="{'pwd-not-match': !pwdLen, 'pwd-match': pwdLen}">8 or more characters</div>
-      </nz-space>
-      <a (click)="togglePassword()" style="font-size: 0.7rem" class="link-primary">{{showPassword ? 'Hide password': 'Show password'}}</a>
-    </div>
-
     <nz-space>
-      <ng-template [ngIf]="upperLower">
+      <ng-template [ngIf]="pwdLen">
         <div *nzSpaceItem class="checkmark">
           <svg viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
             <polygon points="5 12 0 7 2 5 5 8 13 0 15 2" fill="#068466"></polygon>
           </svg>
         </div>
       </ng-template>
-      <div *nzSpaceItem [ngClass]="{'pwd-not-match': !upperLower, 'pwd-match': upperLower}">Upper + lowercase letters</div>
+      <div *nzSpaceItem [ngClass]="{'pwd-not-match': !pwdLen, 'pwd-match': pwdLen}">6 or more characters</div>
     </nz-space>
 
     <nz-space>
@@ -105,25 +153,14 @@
     </nz-space>
 
     <nz-space>
-      <ng-template [ngIf]="noRepetitive">
+      <ng-template [ngIf]="alphabet">
         <div *nzSpaceItem class="checkmark">
           <svg viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
             <polygon points="5 12 0 7 2 5 5 8 13 0 15 2" fill="#068466"></polygon>
           </svg>
         </div>
       </ng-template>
-      <div *nzSpaceItem [ngClass]="{'pwd-not-match': !noRepetitive, 'pwd-match': noRepetitive}">No repetitive characters (e.g. 'bbb', 'Aaa')</div>
-    </nz-space>
-
-    <nz-space>
-      <ng-template [ngIf]="noSequential">
-        <div *nzSpaceItem class="checkmark">
-          <svg viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
-            <polygon points="5 12 0 7 2 5 5 8 13 0 15 2" fill="#068466"></polygon>
-          </svg>
-        </div>
-      </ng-template>
-      <div *nzSpaceItem [ngClass]="{'pwd-not-match': !noSequential, 'pwd-match': noSequential}">No sequential characters (e.g. 'abc', '123', '321' or 'cba')</div>
+      <div *nzSpaceItem [ngClass]="{'pwd-not-match': !alphabet, 'pwd-match': alphabet}">At least one alphabet</div>
     </nz-space>
   </div>
 

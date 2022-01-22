@@ -15,11 +15,14 @@ type Rule = (self: any, pwd: string) => boolean
 export class LoginInfoStepComponent implements OnInit {
   @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   validateForm!: FormGroup;
+  firstNameValidator: boolean | undefined = undefined;
+  lastNameValidator: boolean | undefined = undefined;
+  emailValidator: boolean | undefined = undefined;
+  passwordValidator: boolean | undefined = undefined;
   preferredName: boolean = false;
   showPassword: boolean = false;
   validPassword: boolean = false;
   loading: boolean = false;
-  validEmail: boolean | undefined = undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +38,25 @@ export class LoginInfoStepComponent implements OnInit {
     });
   }
 
+  inputChange(id: string) {
+      switch (id) {
+        case "firstName":
+          this.firstNameValidator = this.validateForm.value.length !== 0;
+          break;
+        case "lastName":
+          this.lastNameValidator = this.validateForm.value.length !== 0
+          break;
+        case "email":
+          this.emailValidator = this.validateForm.value.length !== 0 && this.validateForm.value.email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+          break;
+        case "password":
+          this.validatePasswordFormat();
+          break;
+      }
+  }
+
   showPreferredName() {
     this.preferredName = true
   }
@@ -44,91 +66,31 @@ export class LoginInfoStepComponent implements OnInit {
   }
 
   pwdLen: boolean = false
-  upperLower: boolean = false
   digit: boolean = false
-  noRepetitive: boolean = false
-  noSequential: boolean = false
-  rules: Array<Rule> = [this.passwordLengthRule, this.uppercaseAndLowercaseRule, this.digitRule, this.noRepetitiveCharsRule, this.noSequentialCharsRule]
+  alphabet: boolean = false
+  rules: Array<Rule> = [this.passwordLengthRule, this.digitRule, this.alphabetRule]
 
   validatePasswordFormat() {
-    this.validPassword = true
+    this.passwordValidator = true
     for (let i = 0; i < this.rules.length; i++) {
       const isMatch = this.rules[i](this, this.validateForm.value.password)
-      this.validPassword = this.validPassword && isMatch
+      this.passwordValidator = this.passwordValidator && isMatch
     }
   }
 
   passwordLengthRule(self: any, pwd: string): boolean {
-    self.pwdLen = pwd.length >= 8
+    self.pwdLen = pwd.length >= 6
     return self.pwdLen
   }
 
-  uppercaseAndLowercaseRule(self: any, pwd: string): boolean {
-    self.upperLower = /.*[a-z].*/.test(pwd) && /.*[A-Z].*/.test(pwd)
-    return self.upperLower
+  alphabetRule(self: any, pwd: string): boolean {
+    self.alphabet = /.*[a-z].*/.test(pwd) || /.*[A-Z].*/.test(pwd)
+    return self.alphabet
   }
 
   digitRule(self: any, pwd: string): boolean {
     self.digit = /.*\d.*/.test(pwd)
     return self.digit
-  }
-
-  noRepetitiveCharsRule(self: any, pwd: string): boolean {
-    if (pwd.length == 0) {
-      self.noRepetitive = false
-      return self.noRepetitive
-    }
-    if (pwd.length < 3) {
-      self.noRepetitive = true
-      return self.noRepetitive
-    }
-    for (let i = 0; i < pwd.length; i++) {
-      if (+pwd[+i+1] == +pwd[i] && +pwd[+i+2] == +pwd[i]) {
-        self.noRepetitive = false
-        return self.noRepetitive
-      }
-    }
-    pwd = pwd.toUpperCase()
-    for (let i = 0; i < pwd.length; i++) {
-      if (String.fromCharCode(pwd.charCodeAt(i)) == pwd[+i+1] && String.fromCharCode(pwd.charCodeAt(i)) == pwd[+i+2]) {
-        self.noRepetitive = false
-        return self.noRepetitive
-      }
-    }
-    self.noRepetitive = true
-    return self.noRepetitive
-  }
-
-  noSequentialCharsRule(self: any, pwd: string): boolean {
-    if (pwd.length == 0) {
-      self.noSequential = false
-      return self.noSequential
-    }
-    if (pwd.length < 3) {
-      self.noSequential = true
-      return self.noSequential
-    }
-    for (let i = 0; i < pwd.length; i++) {
-      if (+pwd[+i+1] == +pwd[i]+1 && +pwd[+i+2] == +pwd[i]+2) {
-        self.noSequential = false
-        return self.noSequential
-      }
-    }
-    pwd = pwd.toUpperCase()
-    for (let i = 0; i < pwd.length; i++) {
-      if (String.fromCharCode(pwd.charCodeAt(i)+1) == pwd[+i+1] && String.fromCharCode(pwd.charCodeAt(i)+2) == pwd[+i+2]) {
-        self.noSequential = false
-        return self.noSequential
-      }
-    }
-    self.noSequential = true
-    return self.noSequential
-  }
-
-  validateEmail() {
-    this.validEmail = this.validateForm.value.email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )
   }
 
   allowSubmit() {
