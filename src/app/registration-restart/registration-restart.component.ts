@@ -4,7 +4,8 @@ import {stepKey, tokenKey} from "../constant";
 
 @Component({
   selector: 'app-registration-restart',
-  templateUrl: './registration-restart.component.html'
+  templateUrl: './registration-restart.component.html',
+  styleUrls: ['./registration-restart.component.css'],
 })
 export class RegistrationRestartComponent {
   @Output() restart: EventEmitter<boolean> = new EventEmitter<boolean>(false)

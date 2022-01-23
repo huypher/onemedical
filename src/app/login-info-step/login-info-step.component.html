@@ -10,7 +10,7 @@
   <label class="label">Full name</label>
   <div class="field-name">
     <div class="first-name">
-      <nz-form-item>
+      <nz-form-item [style]="!isFirstNameValid && isFirstNameValid !== undefined ? 'margin-bottom: 5px' : 'margin-bottom: 24px'">
         <nz-form-control>
           <nz-input-group>
             <input
@@ -19,19 +19,20 @@
               nz-input
               id="firstName"
               (ngModelChange)="inputChange(firstName.id)"
+              [ngClass]="!isFirstNameValid && isFirstNameValid !== undefined ? 'invalid' : 'valid'"
               formControlName="firstName"
               placeholder="First name"
             />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
-      <ng-template [ngIf]="!firstNameValidator && firstNameValidator !== undefined">
-        <label style="color: red; margin-bottom: 35px;">Please enter your first name</label>
+      <ng-template [ngIf]="!isFirstNameValid && isFirstNameValid !== undefined">
+        <label style="font-size: 0.8em; color: red; margin-bottom: 35px;">Please enter your first name</label>
       </ng-template>
     </div>
 
     <div  class="last-name">
-      <nz-form-item>
+      <nz-form-item [style]="!isLastNameValid && isLastNameValid !== undefined ? 'margin-bottom: 5px' : 'margin-bottom: 24px'">
         <nz-form-control>
           <nz-input-group>
             <input
@@ -40,18 +41,19 @@
               nz-input
               id="lastName"
               (ngModelChange)="inputChange(lastName.id)"
+              [ngClass]="!isLastNameValid && isLastNameValid !== undefined ? 'invalid' : 'valid'"
               formControlName="lastName"
               placeholder="Last name" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
-      <ng-template [ngIf]="!lastNameValidator && lastNameValidator !== undefined">
-        <label style="color: red; margin-bottom: 35px;">Please enter your last name</label>
+      <ng-template [ngIf]="!isLastNameValid && isLastNameValid !== undefined">
+        <label style="font-size: 0.8em; color: red; margin-bottom: 35px;">Please enter your last name</label>
       </ng-template>
     </div>
   </div>
 
-  <ng-template [ngIf]="preferredName"; [ngIfElse]="hiddenPreferredName">
+  <ng-template [ngIf]="isPreferredNameVisibility" ; [ngIfElse]="hiddenPreferredName">
     <label class="label">Preferred name</label>
     <nz-form-item>
       <nz-form-control>
@@ -77,12 +79,13 @@
             id="email"
             nz-input
             formControlName="email"
+            [ngClass]="!isEmailValid && isEmailValid !== undefined ? 'invalid' : 'valid'"
             (ngModelChange)="inputChange(email.id)" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
-    <ng-template [ngIf]="!emailValidator && emailValidator !== undefined">
-      <label style="color: red; margin-bottom: 35px;">Please enter a valid email.</label>
+    <ng-template [ngIf]="!isEmailValid && isEmailValid !== undefined">
+      <label style="font-size: 0.8em; color: red; margin-bottom: 35px;">Please enter a valid email.</label>
     </ng-template>
   </div>
 
@@ -93,16 +96,16 @@
         <nz-input-group>
           <input
             #password
-            [type]="showPassword ? 'text' : 'password'"
+            [type]="isPasswordVisibility ? 'text' : 'password'"
             id="password"
             nz-input
             formControlName="password"
             (ngModelChange)="inputChange(password.id)"
-            [class]="!passwordValidator && passwordValidator !== undefined ? 'invalid-pwd' : 'valid-pwd'"
+            [ngClass]="!isPasswordValid && isPasswordValid !== undefined ? 'invalid' : 'valid'"
           />
         </nz-input-group>
       </nz-form-control>
-      <ng-template [ngIf]="!showPassword">
+      <ng-template [ngIf]="!isPasswordVisibility">
         <span class="toggle-pw-visibility" (click)="togglePassword()">
         <svg viewBox="0 0 21 14" xmlns="http://www.w3.org/2000/svg" width="22" height="14">
           <path d="M8.526 6.64a1.5 1.5 0 0 0 2.115-2.115A2.5 2.5 0 1 1 8.525 6.64zM11 0c5.281 0 10.01 5.89 10.01 5.89.546.613.566 1.625.014 2.25 0 0-4.441 5.86-10.024 5.86C5.415 14 .976 8.14.976 8.14c-.54-.63-.542-1.643.029-2.265C1.005 5.875 5.716 0 11 0zm0 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10z" fill-rule="evenodd" fill="#0358b2"></path>
@@ -110,7 +113,7 @@
         Show
       </span>
       </ng-template>
-      <ng-template [ngIf]="showPassword">
+      <ng-template [ngIf]="isPasswordVisibility">
         <span _ngcontent-ddo-c289="" class="toggle-pw-visibility" (click)="togglePassword()">
           <svg fill="none" viewBox="0 0 24 15" xmlns="http://www.w3.org/2000/svg" width="24" height="15">
           <path clip-rule="evenodd" d="m20.6331 6.89043.0079-.14888.3775-.28036c.0517-.03834.0815-.09636.0815-.16119 0-.06763-.0327-.12815-.0882-.16596l-.115-.07843-.0893-.10687c-2.6305-3.14985-5.3648-4.77065-8.2302-4.93556-.1251-.00877-.2509-.01318-.3773-.01318-.0187.00002-.0187.00002-.0498.00014-.0241-.00012-.0241-.00012-.0482-.00014-3.01042 0-5.98529 1.65668-8.93948 5.0547l-.09426.0948c-.04383.03854-.06826.0914-.06826.1505 0 .06872.03387.13021.09082.16773l.10266.06764.08322.09049c2.85753 3.1071 5.66226 4.73684 8.4261 4.95124.1644.0152.3303.0229.4972.0229.0218 0 .0218 0 .0584-.0002.0272.0002.0272.0002.0545.0002 2.8687 0 5.6354-1.542 8.3202-4.70957z" fill-rule="evenodd" stroke-width="2" stroke="#0358B2"></path>

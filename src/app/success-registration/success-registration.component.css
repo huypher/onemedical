@@ -1,0 +1,30 @@
+::ng-deep .ant-btn-primary {
+  color: #fff;
+  background-color: #068466;
+  cursor: pointer;
+  width: 30%;
+  height: auto;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  border-radius: 0.25rem;
+  width: 250px;
+}
+
+::ng-deep .ant-btn-primary:hover {
+  background-color: #0c5f4d;
+  border: 1px solid transparent;
+}
+
+::ng-deep .ant-btn-primary:focus {
+  background-color: #0c5f4d;
+  border: 1px solid transparent;
+}
+
+::ng-deep .ant-btn.submit:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}

@@ -23,8 +23,98 @@ button.submit:hover {
   background-color: #0c5f4d;
 }
 
+button.submit:hover:focus {
+  background-color: #0c5f4d;
+  border: 1px solid transparent;
+}
 
 button.ant-btn.submit:disabled {
   opacity: .65;
   cursor: not-allowed;
 }
+
+::ng-deep .anticon-spin {
+  width: 2em;
+  height: 2em;
+}
+
+.doc-content {
+  border: 2px solid #eee;
+  max-height: 300px;
+  overflow: scroll;
+  transition: max-height .5s ease;
+}
+
+/*::ng-deep svg{*/
+/*  fill: #0158b2;*/
+/*}*/
+
+.term-title {
+  color: #0158b2;
+}
+
+.term-title:before {
+  content: "";
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-right: 3px solid #0358b2;
+  border-bottom: 3px solid #0358b2;
+  transform: rotate(
+    -45deg
+  );
+  transition: transform .5s ease;
+  margin: 0 0.5rem 2px 0;
+}
+
+.term-title:hover {
+  color: #0158b2;
+  text-decoration: underline;
+}
+
+.term-title-rotated {
+  color: #0158b2;
+}
+
+.term-title-rotated:before {
+  content: "";
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-right: 3px solid #0358b2;
+  border-bottom: 3px solid #0358b2;
+  transform: rotate(45deg);
+  transition: transform .5s ease;
+  margin: 0 0.5rem 2px 0;
+}
+
+.term-title-rotated:hover {
+  color: #0158b2;
+  text-decoration: underline;
+}
+
+::ng-deep .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #07a57f;
+  border-color: #07a57f;
+}
+
+::ng-deep .ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: #07a57f;
+}
+
+::ng-deep .ant-checkbox:hover .ant-checkbox-inner {
+  border-color: #07a57f;
+}
+
+::ng-deep .ant-checkbox-input:focus + .ant-checkbox-inner {
+  border-color: #07a57f;
+}
+
+::ng-deep .anticon-spin {
+  width: 2em;
+  height: 2em;
+}
+
+/*::ng-deep .ant-collapse > .ant-collapse-item > .ant-collapse-header {*/
+/*  pointer-events: none;*/
+/*}*/

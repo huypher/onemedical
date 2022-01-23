@@ -1,7 +1,11 @@
 <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" class="page-logo" style="height: 55px">
-<!--  <div nz-col class="gutter-row" [nzSpan]="7"></div>-->
-<!--  <div nz-col class="gutter-row page-logo" [nzSpan]="10">-->
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="#005450" viewBox="0 0 560.6 69.4" xml:space="preserve" style="max-width: 45%; max-height: 45%;">
+    <ng-template [ngIf]="isBackVisibility">
+      <svg (click)="previousStep()" style="cursor: pointer; stroke: #068466; margin-left: 45px" width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="ng-star-inserted">
+        <path _ngcontent-xoy-c92="" d="M10.4967 1.39286C10.4967 1.24219 10.4297 1.10826 10.3292 1.00781L9.49219 0.170758C9.39174 0.0703125 9.24107 0.00334668 9.10714 0.00334668C8.97321 0.00334668 8.82255 0.0703125 8.7221 0.170758L0.920759 7.9721C0.820313 8.07254 0.753348 8.22321 0.753348 8.35714C0.753348 8.49107 0.820313 8.64174 0.920759 8.74219L8.7221 16.5435C8.82255 16.644 8.97321 16.7109 9.10714 16.7109C9.24107 16.7109 9.39174 16.644 9.49219 16.5435L10.3292 15.7065C10.4297 15.606 10.4967 15.4554 10.4967 15.3214C10.4967 15.1875 10.4297 15.0368 10.3292 14.9364L3.75 8.35714L10.3292 1.7779C10.4297 1.67745 10.4967 1.52678 10.4967 1.39286Z" fill="green"></path>
+      </svg>
+    </ng-template>
+  <ng-template [ngIf]="!isBackVisibility"><div></div></ng-template>
+    <svg  style="max-width: 45%; max-height: 45%; margin-left: -45px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="#005450" viewBox="0 0 560.6 69.4" xml:space="preserve">
       <title class="page-logo">One Medical</title>
       <path d="M305.2,17.1c-6.8,0-12.1,3.9-14.9,10.5c-2.2-6.7-7.5-10.5-14-10.5s-11.3,3.9-13.8,10.3v-8.8h-10.4V68h10.4V38.4
     c0-7.6,3.8-12.9,10-12.9c5.8,0,8.8,3.9,8.8,11.5v31h10.3V37.6c0-7.1,3.8-12.1,10.1-12.1c5.8,0,8.5,3.9,8.5,11.8V68h10.3V35.5
@@ -28,7 +32,7 @@
     C30.9,21.4,28.2,18.6,24.7,18.6C24.7,18.6,24.7,18.6,24.7,18.6L24.7,18.6z M43.2,37.1c-3.4,0-6.2,2.8-6.2,6.2c0,3.4,2.8,6.2,6.2,6.2
     c3.4,0,6.2-2.8,6.2-6.2c0,0,0,0,0,0C49.4,39.9,46.6,37.1,43.2,37.1C43.2,37.1,43.2,37.1,43.2,37.1z" class="st0"></path>
     </svg>
-<!--  <div nz-col class="gutter-row" [nzSpan]="7"></div>-->
+    <div></div>
 </div>
 
 <nz-progress [nzPercent]="percent" [nzShowInfo]="false" [nzStrokeColor]="'#068466'"></nz-progress>
@@ -37,15 +41,30 @@
   <div nz-col class="gutter-row" [nzSpan]="7"></div>
   <div nz-col class="gutter-row" [nzSpan]="10" *rerender="rerender">
     <ng-container [ngSwitch]="currentStep | async">
-      <app-login-info-step *ngSwitchCase="'login-info'" (done)="nextStep($event)">
+      <app-login-info-step
+        *ngSwitchCase="'login-info'"
+        (done)="nextStep($event)"
+        (currentSession)="loginInfoSession($event)"
+        [restoreSessionData]="loginInfoSessionData"
+      >
       </app-login-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-address-info-step *ngSwitchCase="'address-info'"(done)="nextStep($event)">
+      <app-address-info-step
+        *ngSwitchCase="'address-info'"
+        (done)="nextStep($event)"
+        (currentSession)="addressInfoSession($event)"
+        [restoreSessionData]="addressInfoSessionData"
+      >
       </app-address-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-personal-info-step *ngSwitchCase="'personal-info'" (done)="nextStep($event)">
+      <app-personal-info-step
+        *ngSwitchCase="'personal-info'"
+        (done)="nextStep($event)"
+        (currentSession)="personalInfoSession($event)"
+        [restoreSessionData]="personalInfoSessionData"
+      >
       </app-personal-info-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
@@ -53,7 +72,7 @@
       </app-term-agreement-step>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">
-      <app-success-registration *ngSwitchCase="'success-registration'">
+      <app-success-registration *ngSwitchCase="'success-registration'" (restart)="restart($event)">
       </app-success-registration>
     </ng-container>
     <ng-container [ngSwitch]="currentStep | async">

@@ -98,6 +98,10 @@ button.submit:hover {
   background-color: #0c5f4d;
 }
 
+button.submit:hover:focus {
+  background-color: #0c5f4d;
+  border: 1px solid transparent;
+}
 
 button.ant-btn.submit:disabled {
   opacity: .65;
@@ -108,20 +112,25 @@ input {
   height: calc(3.3125rem + 2px);
 }
 
-input:hover {
+input.valid:hover {
   border: 1px solid #15f4bf;
 }
 
-input:focus {
-  border: 2px solid #15f4bf;
+input.valid:focus {
+  border: 1px solid #15f4bf;
 }
 
-.ant-form-item {
-  margin-bottom: 5px;
+input.invalid {
+  border: 1px solid #d54859;
 }
 
-input.invalid-pwd {
-  border: 1px solid red;
+input.invalid:hover {
+  border: 1px solid #d54859;
+}
+
+input.invalid:focus {
+  border: 1px solid #bf5965;
+  box-shadow: 0 0 0 .2rem rgba(213,72,89,.25);
 }
 
 .pwd-wrapper {

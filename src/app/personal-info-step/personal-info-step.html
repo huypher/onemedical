@@ -8,11 +8,18 @@
   <nz-form-item class="phone-number-field">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="phoneNumber" (ngModelChange)="validatePhoneNumber()"/>
+        <input
+          #phoneNumber
+          type="text"
+          nz-input
+          [ngClass]="!isPhoneNumberValid && isPhoneNumberValid !== undefined ? 'invalid' : 'valid'"
+          formControlName="phoneNumber"
+          id="phoneNumber"
+          (ngModelChange)="inputChange(phoneNumber.id)"/>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
-  <ng-template [ngIf]="!validPhoneNumber && validPhoneNumber !== undefined">
+  <ng-template [ngIf]="!isPhoneNumberValid && isPhoneNumberValid !== undefined">
     <p style="font-size: 0.8em; margin-bottom: 0.3em; color: red">Please enter a valid 10-digit or 11-digit phone number</p>
   </ng-template>
 
@@ -29,11 +36,19 @@
   <nz-form-item class="birthday-field">
     <nz-form-control>
       <nz-input-group>
-        <input type="text" nz-input formControlName="birthday" placeholder="MM/DD/YYYY" (ngModelChange)="validateBirthday()" />
+        <input
+          #birthday
+          type="text"
+          nz-input
+          formControlName="birthday"
+          placeholder="MM/DD/YYYY"
+          [ngClass]="!isBirthdayValid && isBirthdayValid !== undefined ? 'invalid' : 'valid'"
+          id="birthday"
+          (ngModelChange)="inputChange(birthday.id)" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
-  <ng-template [ngIf]="!validBirthday && validBirthday !== undefined">
+  <ng-template [ngIf]="!isBirthdayValid && isBirthdayValid !== undefined">
     <p style="font-size: 0.8em; margin-bottom: 0.3em; color: red">Please enter a valid birthday in the format MM/DD/YYYY</p>
   </ng-template>
   <p style="font-size: 0.8em; margin-bottom: 24px">Used to verify your identify before appointments</p>
@@ -63,6 +78,6 @@
   </ng-template>
 
   <div class="submit-container">
-    <button nz-button class="submit" [disabled]="!allowSubmit()" (click)="submit()">Next</button>
+    <button nz-button class="submit" [disabled]="!allowSubmit()" (click)="submitWithDelay()" [nzLoading]="loading">{{loading ? '' : 'Next'}}</button>
   </div>
 </form>

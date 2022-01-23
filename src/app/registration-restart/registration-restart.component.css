@@ -3,7 +3,7 @@
   flex-flow: row-reverse wrap;
 }
 
-button.ant-btn.submit {
+::ng-deep .ant-btn-primary {
   color: #fff;
   background-color: #068466;
   cursor: pointer;
@@ -16,10 +16,12 @@ button.ant-btn.submit {
   font-size: 1.0625rem;
   line-height: 1.8;
   border-radius: 0.25rem;
+  width: 250px;
 }
 
-button.submit:hover {
+::ng-deep .ant-btn-primary:hover {
   background-color: #0c5f4d;
+  border: 1px solid transparent;
 }
 
 

@@ -1,9 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AddressInfoService} from "./address-info.service";
-import {AddressInfoReq} from "./types";
+import {AddressInfoReq, AddressInfoSessionData} from "./types";
 import {loadingTime} from '../constant';
-
 
 @Component({
   selector: 'app-address-info-step',
@@ -12,6 +11,8 @@ import {loadingTime} from '../constant';
 })
 export class AddressInfoStepComponent implements OnInit {
   @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  @Output() currentSession: EventEmitter<AddressInfoSessionData> = new EventEmitter<AddressInfoSessionData>(false)
+  @Input() restoreSessionData: AddressInfoSessionData = {}
   validateForm!: FormGroup;
   states: Array<string> = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
   'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',
@@ -26,7 +27,7 @@ export class AddressInfoStepComponent implements OnInit {
   address1Validator: boolean | undefined = undefined;
   cityValidator: boolean | undefined = undefined;
   zipCodeValidator: boolean | undefined = undefined;
-  loading = false
+  loading: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -34,12 +35,12 @@ export class AddressInfoStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      address1: [null, [Validators.required]],
-      address2: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      state: [null, [Validators.required]],
-      zipcode: [null, [Validators.required]],
-      area: [null, [Validators.required]],
+      address1: [this.restoreSessionData.address1 || null, [Validators.required]],
+      address2: [this.restoreSessionData.address2 || null, [Validators.required]],
+      city: [this.restoreSessionData.city || null, [Validators.required]],
+      state: [this.restoreSessionData.state_code || null, [Validators.required]],
+      zipcode: [this.restoreSessionData.zip || null, [Validators.required]],
+      area: [this.restoreSessionData.service_area_code || null, [Validators.required]],
     });
   }
 
@@ -78,6 +79,15 @@ export class AddressInfoStepComponent implements OnInit {
 
   submit(): void {
     const formValue: any = this.validateForm.value
+    const sessionData: AddressInfoSessionData =
+      {
+        address1: formValue.address1,
+        address2: formValue.address2,
+        city  : formValue.city,
+        state_code: formValue.state,
+        zip: formValue.zipcode,
+        service_area_code: formValue.area
+    }
     const body: AddressInfoReq =
       {
         address: {
@@ -90,8 +100,14 @@ export class AddressInfoStepComponent implements OnInit {
         service_area_code: formValue.area
       }
     this.addressInfoService.postAddressInfo(body).subscribe(
-      resp => this.done.emit(true),
-      error =>  this.done.emit(false),
+      resp => {
+        this.currentSession.emit(sessionData)
+        this.done.emit(true)
+      },
+      error =>  {
+        this.currentSession.emit(sessionData)
+        this.done.emit(false)
+      }
     )
   }
 }

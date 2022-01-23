@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {PersonalInfoStepService} from "./personal-info-step.service";
-import {PersonalInfoReq} from "./types";
+import {PersonalInfoReq, PersonalInfoSessionData} from "./types";
 import * as moment from 'moment';
-import {getLocalStorage} from "../core/util/local-storage";
-import {tokenKey} from '../constant';
+import {loadingTime} from '../constant';
+import {AddressInfoSessionData} from "../address-info-step/types";
 
 @Component({
   selector: 'app-personal-info-step',
@@ -13,10 +13,13 @@ import {tokenKey} from '../constant';
 })
 export class PersonalInfoStepComponent implements OnInit {
   @Output() done: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  @Output() currentSession: EventEmitter<PersonalInfoSessionData> = new EventEmitter<PersonalInfoSessionData>(false)
+  @Input() restoreSessionData: PersonalInfoSessionData = {}
   validateForm!: FormGroup;
   enableGenderInfo: boolean = false
-  validBirthday: boolean | undefined = undefined
-  validPhoneNumber: boolean | undefined = undefined
+  isBirthdayValid: boolean | undefined = undefined
+  isPhoneNumberValid: boolean | undefined = undefined
+  loading: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -24,25 +27,27 @@ export class PersonalInfoStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      phoneNumber: [null, [Validators.required]],
-      downloadLinkOption: [null],
-      birthday: [null, [Validators.required]],
-      gender: [null, [Validators.required]],
-      genderInfo: [null],
+      phoneNumber: [this.restoreSessionData.phone_number || null, [Validators.required]],
+      downloadLinkOption: [this.restoreSessionData.download_link_option || null],
+      birthday: [this.restoreSessionData.date_of_birth || null, [Validators.required]],
+      gender: [this.restoreSessionData.gender || null, [Validators.required]],
+      genderInfo: [this.restoreSessionData.gender_details || null],
     });
-  }
-
-  validateBirthday() {
-    if (moment(this.validateForm.value.birthday, 'MM/DD/YYYY', true).isValid()) {
-      this.validBirthday = true
-      return
+    if (this.validateForm.value.birthday !== null) {
+      this.birthdayValidator()
     }
-    this.validBirthday = false
+    if (this.validateForm.value.phoneNumber !== null) {
+      this.phoneNumberValidator()
+    }
   }
 
-  validatePhoneNumber() {
+  birthdayValidator() {
+    this.isBirthdayValid = moment(this.validateForm.value.birthday, 'MM/DD/YYYY', true).isValid()
+  }
+
+  phoneNumberValidator() {
     const phoneNumber: string = this.validateForm.value.phoneNumber
-    this.validPhoneNumber = /^\d+$/.test(phoneNumber) && (phoneNumber.length == 10 ||
+    this.isPhoneNumberValid = /^\d+$/.test(phoneNumber) && (phoneNumber.length == 10 ||
       phoneNumber.length == 11)
   }
 
@@ -51,24 +56,25 @@ export class PersonalInfoStepComponent implements OnInit {
   }
 
   allowSubmit() {
-    return this.validateForm.valid && this.validBirthday && this.validBirthday !== undefined &&
-      this.validPhoneNumber && this.validPhoneNumber !== undefined
+    return this.validateForm.valid && this.isBirthdayValid && this.isBirthdayValid !== undefined &&
+      this.isPhoneNumberValid && this.isPhoneNumberValid !== undefined
   }
 
-  submit(): void {
+  inputChange(id: string) {
+    switch (id) {
+      case "phoneNumber":
+        this.phoneNumberValidator()
+        break;
+      case "birthday":
+        this.birthdayValidator()
+        break;
+    }
+  }
+
+  submitWithDelay() {
     if (this.validateForm.valid) {
-      const formValue: any = this.validateForm.value
-      const body: PersonalInfoReq = {
-        date_of_birth: formValue.birthday,
-        download_link_option: formValue.downloadLinkOption,
-        gender: formValue.gender,
-        gender_details: formValue.genderInfo,
-        phone_number: formValue.phoneNumber,
-      }
-      this.personalInfoService.postPersonalInfo(body).subscribe(
-        resp => this.done.emit(true),
-        error =>  this.done.emit(false),
-      )
+      this.loading = true
+      setTimeout(() => this.submit(), loadingTime)
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -77,5 +83,34 @@ export class PersonalInfoStepComponent implements OnInit {
         }
       });
     }
+  }
+
+  submit(): void {
+    const formValue: any = this.validateForm.value
+    const sessionData: PersonalInfoSessionData =
+      {
+        date_of_birth: formValue.birthday,
+        download_link_option: formValue.downloadLinkOption,
+        gender: formValue.gender,
+        gender_details: formValue.genderInfo,
+        phone_number: formValue.phoneNumber,
+      }
+    const body: PersonalInfoReq = {
+      date_of_birth: formValue.birthday,
+      download_link_option: formValue.downloadLinkOption,
+      gender: formValue.gender,
+      gender_details: formValue.genderInfo,
+      phone_number: formValue.phoneNumber,
+    }
+    this.personalInfoService.postPersonalInfo(body).subscribe(
+      resp => {
+        this.currentSession.emit(sessionData)
+        this.done.emit(true)
+      },
+      error =>  {
+        this.currentSession.emit(sessionData)
+        this.done.emit(false)
+      }
+    )
   }
 }

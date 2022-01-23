@@ -3,6 +3,9 @@ import {BehaviorSubject} from "rxjs";
 import {Iterator} from '../core/util/iterator'
 import {delLocalStorage, getLocalStorage, saveLocalStorageWithExpire} from "../core/util/local-storage";
 import {stepKey, tokenKey, ttl} from '../constant';
+import {AddressInfoSessionData} from "../address-info-step/types";
+import {PersonalInfoSessionData} from "../personal-info-step/types";
+import {LoginInfoSessionData} from "../login-info-step/types";
 
 type Step = string | undefined
 
@@ -20,6 +23,10 @@ export class RegistrationComponent implements OnInit {
   stepIterator: Iterator<Step> = new Iterator<Step>(this.fromStep(), steps)
   percentUnit: number = 100/steps.length
   rerender: boolean = false
+  isBackVisibility: boolean = false;
+  addressInfoSessionData: AddressInfoSessionData = {}
+  personalInfoSessionData: PersonalInfoSessionData = {}
+  loginInfoSessionData: LoginInfoSessionData = {}
 
   ngOnInit(): void {
     const init = this.fromStep()
@@ -30,12 +37,31 @@ export class RegistrationComponent implements OnInit {
     this.currentStep.next(RegistrationRestartStep)
   }
 
+  addressInfoSession(data: AddressInfoSessionData) {
+    this.addressInfoSessionData = data
+  }
+
+  personalInfoSession(data: PersonalInfoSessionData) {
+    this.personalInfoSessionData = data
+  }
+
+  loginInfoSession(data: LoginInfoSessionData) {
+    this.loginInfoSessionData = data
+  }
+
+  checkBackVisibility(stepIdx: number) {
+    this.isBackVisibility = stepIdx >= 2 && stepIdx < steps.length-1
+  }
+
   fromStep(): number {
     const step = getLocalStorage(stepKey)
     if (step === '') {
+      this.checkBackVisibility(0)
       return 0
     }
-    return steps.findIndex(e => e === step)
+    const stepIdx = steps.findIndex(e => e === step)
+    this.checkBackVisibility(stepIdx)
+    return stepIdx
   }
 
   nextStep(done: boolean) {
@@ -46,8 +72,19 @@ export class RegistrationComponent implements OnInit {
     const nextStep =  this.stepIterator.next()
     if (nextStep != undefined) {
       this.currentStep.next(nextStep.state)
+      this.checkBackVisibility(nextStep.idx)
       this.percent = (nextStep.idx+1) * this.percentUnit
       saveLocalStorageWithExpire(stepKey, nextStep?.state || '', ttl)
+    }
+  }
+
+  previousStep() {
+    const previousStep =  this.stepIterator.previous()
+    if (previousStep != undefined) {
+      this.currentStep.next(previousStep.state)
+      this.checkBackVisibility(previousStep.idx)
+      this.percent = (previousStep.idx+1) * this.percentUnit
+      saveLocalStorageWithExpire(stepKey, previousStep?.state || '', ttl)
     }
   }
 

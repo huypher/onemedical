@@ -17,6 +17,14 @@ export class Iterator<T> {
     return {state: this.data[this.idx], idx: this.idx}
   }
 
+  previous(): Result<T> {
+    if (this.idx <= 0) {
+      return undefined
+    }
+    this.idx--
+    return {state: this.data[this.idx], idx: this.idx}
+  }
+
   reset() {
     this.idx = -1
   }

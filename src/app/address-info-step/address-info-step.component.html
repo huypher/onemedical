@@ -15,13 +15,14 @@
           (ngModelChange)="inputChange(address1.id)"
           type="text"
           nz-input
+          [ngClass]="!address1Validator && address1Validator !== undefined ? 'invalid' : 'valid'"
           formControlName="address1"
           placeholder="123 One Medical St." />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
   <ng-template [ngIf]="!address1Validator && address1Validator !== undefined">
-    <label style="color: red; margin-bottom: 24px;">Please enter a valid address</label>
+    <label style="font-size: 0.8em; color: red; margin-bottom: 24px;">Please enter a valid address</label>
   </ng-template>
 
   <nz-form-item>
@@ -40,6 +41,7 @@
           #city
           id="city"
           (ngModelChange)="inputChange(city.id)"
+          [ngClass]="!cityValidator && cityValidator !== undefined ? 'invalid' : 'valid'"
           type="text"
           nz-input
           formControlName="city" />
@@ -47,7 +49,7 @@
     </nz-form-control>
   </nz-form-item>
   <ng-template [ngIf]="!cityValidator && cityValidator !== undefined">
-    <label style="color: red; margin-bottom: 24px;">Please enter a city</label>
+    <label style="font-size: 0.8em; color: red; margin-bottom: 24px;">Please enter a city</label>
   </ng-template>
 
   <div class="state-zipcode">
@@ -69,6 +71,7 @@
               #zipcode
               id="zipcode"
               (ngModelChange)="inputChange(zipcode.id)"
+              [ngClass]="!zipCodeValidator && zipCodeValidator !== undefined ? 'invalid' : 'valid'"
               type="text"
               nz-input
               formControlName="zipcode" />
@@ -76,7 +79,7 @@
         </nz-form-control>
       </nz-form-item>
       <ng-template [ngIf]="!zipCodeValidator && zipCodeValidator !== undefined">
-        <label style="color: red; margin-bottom: 24px;">Please enter ZIP code</label>
+        <label style="font-size: 0.8em; color: red; margin-bottom: 24px;">Please enter ZIP code</label>
       </ng-template>
     </div>
   </div>

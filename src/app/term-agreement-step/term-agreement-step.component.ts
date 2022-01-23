@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {TermAgreementStepService} from "./term-agreement-step.service";
 import {TermAgreementReq} from "./types";
 import {getLocalStorage} from "../core/util/local-storage";
-import {tokenKey} from '../constant';
+import {loadingTime, tokenKey} from '../constant';
 
 @Component({
   selector: 'app-term-agreement-step',
@@ -15,11 +15,38 @@ export class TermAgreementStepComponent {
   medicalTerm: boolean = false;
   privacyPolicyTerm: boolean = false;
   noticePolicyTerm: boolean = false;
+  loading: boolean = false
+  isMemberShipTermActive: boolean = false
+  isMedicalTermActive: boolean = false
+  isPrivacyPolicyTermActive: boolean = false
+  isNoticePolicyTermTermActive: boolean = false
 
   constructor(private termAgreementService: TermAgreementStepService) {}
 
+  collapseChange(id: string, isActive: boolean) {
+    switch (id) {
+      case "memberShipTerm":
+        this.isMemberShipTermActive = isActive
+        break;
+      case "medicalTerm":
+        this.isMedicalTermActive = isActive
+        break;
+      case "privacyPolicyTerm":
+        this.isPrivacyPolicyTermActive = isActive
+        break;
+      case "noticePolicyTerm":
+        this.isNoticePolicyTermTermActive = isActive
+        break;
+    }
+  }
+
   allowSubmit() {
     return this.memberShipTerm && this.medicalTerm && this.privacyPolicyTerm && this.noticePolicyTerm
+  }
+
+  submitWithDelay() {
+    this.loading = true
+    setTimeout(() => this.submit(), loadingTime)
   }
 
   submit() {

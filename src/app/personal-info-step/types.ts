@@ -11,3 +11,11 @@ export interface PersonalInfoResp {
   message: string;
   data: any;
 }
+
+export interface PersonalInfoSessionData {
+  date_of_birth?: string
+  download_link_option?: boolean
+  gender?: string
+  gender_details?: string
+  phone_number?: string
+}
