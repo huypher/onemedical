@@ -28,6 +28,7 @@ export class AddressInfoStepComponent implements OnInit {
   cityValidator: boolean | undefined = undefined;
   zipCodeValidator: boolean | undefined = undefined;
   loading: boolean = false
+  isFailed: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -105,8 +106,8 @@ export class AddressInfoStepComponent implements OnInit {
         this.done.emit(true)
       },
       error =>  {
-        this.currentSession.emit(sessionData)
-        this.done.emit(false)
+        this.isFailed = true
+        this.loading = false
       }
     )
   }

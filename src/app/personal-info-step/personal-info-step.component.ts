@@ -20,6 +20,7 @@ export class PersonalInfoStepComponent implements OnInit {
   isBirthdayValid: boolean | undefined = undefined
   isPhoneNumberValid: boolean | undefined = undefined
   loading: boolean = false
+  isFailed: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -108,8 +109,8 @@ export class PersonalInfoStepComponent implements OnInit {
         this.done.emit(true)
       },
       error =>  {
-        this.currentSession.emit(sessionData)
-        this.done.emit(false)
+        this.isFailed = true
+        this.loading = false
       }
     )
   }

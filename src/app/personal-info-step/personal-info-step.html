@@ -1,4 +1,7 @@
 <form nz-form [formGroup]="validateForm" class="personal-info-step-form">
+  <ng-template [ngIf]="isFailed">
+    <app-message [type]="'error'" [content]="'An error occurred'"></app-message>
+  </ng-template>
   <br>
   <div class="text-center">
     <h2>Personal info</h2>

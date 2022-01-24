@@ -29,6 +29,7 @@ export class RegistrationComponent implements OnInit {
   loginInfoSessionData: LoginInfoSessionData = {}
 
   ngOnInit(): void {
+    console.log("register init")
     const init = this.fromStep()
     if (init == 0) {
       this.nextStep(true)
@@ -95,6 +96,9 @@ export class RegistrationComponent implements OnInit {
     }
     delLocalStorage(tokenKey)
     delLocalStorage(stepKey)
+    this.loginInfoSessionData = {}
+    this.addressInfoSessionData = {}
+    this.personalInfoSessionData = {}
     this.stepIterator.reset()
     this.nextStep(true)
   }

@@ -32,6 +32,9 @@ import {NzResultModule} from "ng-zorro-antd/result";
 import {RerenderDirective} from "./rerender.directive";
 import {httpInterceptorProviders} from "./core/services/http/interceptor-provider";
 import { RegistrationRestartComponent } from './registration-restart/registration-restart.component';
+import {NzAlertModule} from "ng-zorro-antd/alert";
+import { MessageComponent } from './core/component/message/message.component';
+import {NzMessageModule} from "ng-zorro-antd/message";
 
 registerLocaleData(en);
 
@@ -46,6 +49,7 @@ registerLocaleData(en);
     SuccessRegistrationComponent,
     RerenderDirective,
     RegistrationRestartComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,8 @@ registerLocaleData(en);
     NzRadioModule,
     NzCollapseModule,
     NzResultModule,
+    NzAlertModule,
+    NzMessageModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -1,5 +1,8 @@
 
 <form nz-form [formGroup]="validateForm" class="login-info-step-form">
+  <ng-template [ngIf]="isFailed">
+    <app-message [type]="'error'" [content]="'An error occurred'"></app-message>
+  </ng-template>
   <br>
   <br>
   <div class="text-center">

@@ -24,12 +24,14 @@ export class LoginInfoStepComponent implements OnInit {
   isPreferredNameVisibility: boolean = false;
   isPasswordVisibility: boolean | undefined = undefined;
   loading: boolean = false;
+  isFailed: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private loginInfoService: LoginInfoService) {}
 
   ngOnInit(): void {
+    console.log("login-info init")
     this.validateForm = this.fb.group({
       firstName: [this.restoreSessionData.first_name || null, [Validators.required]],
       lastName: [this.restoreSessionData.last_name || null, [Validators.required]],
@@ -157,9 +159,9 @@ export class LoginInfoStepComponent implements OnInit {
         this.done.emit(true)
       },
       error =>   {
-        this.currentSession.emit(sessionData)
-        this.done.emit(false)
-      }
+        this.isFailed = true
+        this.loading = false
+      },
     )
   }
 }
