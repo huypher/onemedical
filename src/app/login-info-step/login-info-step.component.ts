@@ -31,7 +31,6 @@ export class LoginInfoStepComponent implements OnInit {
     private loginInfoService: LoginInfoService) {}
 
   ngOnInit(): void {
-    console.log("login-info init")
     this.validateForm = this.fb.group({
       firstName: [this.restoreSessionData.first_name || null, [Validators.required]],
       lastName: [this.restoreSessionData.last_name || null, [Validators.required]],
