@@ -29,10 +29,13 @@ export class RegistrationComponent implements OnInit {
   loginInfoSessionData: LoginInfoSessionData = {}
 
   ngOnInit(): void {
-    console.log("register init")
     const init = this.fromStep()
     if (init == 0) {
       this.nextStep(true)
+      return
+    }
+    if (init == steps.length-1) {
+      this.restart(true)
       return
     }
     this.currentStep.next(RegistrationRestartStep)

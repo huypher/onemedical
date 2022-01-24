@@ -11,8 +11,6 @@ export class SuccessRegistrationComponent implements OnInit {
   @Output() restart: EventEmitter<boolean> = new EventEmitter<boolean>(false)
 
   ngOnInit() {
-    delLocalStorage(tokenKey)
-    delLocalStorage(stepKey)
   }
 
   restartRegister() {
