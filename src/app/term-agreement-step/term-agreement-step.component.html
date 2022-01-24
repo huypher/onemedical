@@ -1,12 +1,11 @@
 <br>
 <br>
-<br>
 <div class="text-center">
-  <h2>Terms of Service, Privacy Policy, and HIPAA Notice</h2>
-  <p>In order to join One Medical, you must agree to the terms below.</p>
+  <h2 style="font-size: 5vmin;">Terms of Service, Privacy Policy, and HIPAA Notice</h2>
+  <p style="font-size: 3vmin;">In order to join One Medical, you must agree to the terms below.</p>
 </div>
 <br>
-<p style="font-weight: bold;">I am at least18 years of age and I have read and accept:</p>
+<p style="font-weight: bold; font-size: 1vmax;">I am at least18 years of age and I have read and accept:</p>
 <nz-collapse>
   <nz-collapse-panel
     [nzHeader]="titleMemberShipTerm"
@@ -64,7 +63,7 @@
   </nz-collapse-panel>
 </nz-collapse>
 
-<p style="font-weight: bold; margin-top: 24px">I acknowledge receipt of the following:</p>
+<p style="font-weight: bold; margin-top: 24px;  font-size: 1vmax;">I acknowledge receipt of the following:</p>
 <nz-collapse>
   <nz-collapse-panel
     [nzHeader]="titleNoticePolicyTerm"
@@ -75,7 +74,12 @@
     (nzActiveChange)="collapseChange('noticePolicyTerm', $event)"
   >
     <ng-template #titleNoticePolicyTerm>
-      <a [ngClass]="isNoticePolicyTermTermActive ? 'term-title-rotated' : 'term-title'">Notice of HIPAA Privacy Practices</a>
+      <a
+        [ngClass]="isNoticePolicyTermTermActive ? 'term-title-rotated' : 'term-title'"
+        style="font-size: small;"
+      >
+        Notice of HIPAA Privacy Practices
+      </a>
     </ng-template>
     <ng-template #checkbox4>
       <label nz-checkbox [(ngModel)]="noticePolicyTerm"></label>

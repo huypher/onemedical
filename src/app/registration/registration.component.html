@@ -1,4 +1,4 @@
-<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" class="page-logo" style="height: 55px">
+<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }" class="page-logo" style="height: 55px">
     <ng-template [ngIf]="isBackVisibility">
       <svg (click)="previousStep()" style="cursor: pointer; stroke: #068466; margin-left: 45px" width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="ng-star-inserted">
         <path _ngcontent-xoy-c92="" d="M10.4967 1.39286C10.4967 1.24219 10.4297 1.10826 10.3292 1.00781L9.49219 0.170758C9.39174 0.0703125 9.24107 0.00334668 9.10714 0.00334668C8.97321 0.00334668 8.82255 0.0703125 8.7221 0.170758L0.920759 7.9721C0.820313 8.07254 0.753348 8.22321 0.753348 8.35714C0.753348 8.49107 0.820313 8.64174 0.920759 8.74219L8.7221 16.5435C8.82255 16.644 8.97321 16.7109 9.10714 16.7109C9.24107 16.7109 9.39174 16.644 9.49219 16.5435L10.3292 15.7065C10.4297 15.606 10.4967 15.4554 10.4967 15.3214C10.4967 15.1875 10.4297 15.0368 10.3292 14.9364L3.75 8.35714L10.3292 1.7779C10.4297 1.67745 10.4967 1.52678 10.4967 1.39286Z" fill="green"></path>
@@ -37,48 +37,50 @@
 
 <nz-progress [nzPercent]="percent" [nzShowInfo]="false" [nzStrokeColor]="'#068466'"></nz-progress>
 
-<div nz-row class="layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-  <div nz-col class="gutter-row" [nzSpan]="7"></div>
-  <div nz-col class="gutter-row" [nzSpan]="10" *rerender="rerender">
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-login-info-step
-        *ngSwitchCase="'login-info'"
-        (done)="nextStep($event)"
-        (currentSession)="loginInfoSession($event)"
-        [restoreSessionData]="loginInfoSessionData"
-      >
-      </app-login-info-step>
-    </ng-container>
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-address-info-step
-        *ngSwitchCase="'address-info'"
-        (done)="nextStep($event)"
-        (currentSession)="addressInfoSession($event)"
-        [restoreSessionData]="addressInfoSessionData"
-      >
-      </app-address-info-step>
-    </ng-container>
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-personal-info-step
-        *ngSwitchCase="'personal-info'"
-        (done)="nextStep($event)"
-        (currentSession)="personalInfoSession($event)"
-        [restoreSessionData]="personalInfoSessionData"
-      >
-      </app-personal-info-step>
-    </ng-container>
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-term-agreement-step *ngSwitchCase="'term-agreement-step'" (done)="nextStep($event)">
-      </app-term-agreement-step>
-    </ng-container>
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-success-registration *ngSwitchCase="'success-registration'" (restart)="restart($event)">
-      </app-success-registration>
-    </ng-container>
-    <ng-container [ngSwitch]="currentStep | async">
-      <app-registration-restart *ngSwitchCase="'registration-restart'" (restart)="restart($event)">
-      </app-registration-restart>
-    </ng-container>
+<div nz-row class="layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }">
+  <div nz-col class="gutter-row" [nzSpan]="3"></div>
+  <div nz-col class="gutter-row main-container" [nzSpan]="18" *rerender="rerender">
+    <div class="child-container">
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-login-info-step
+          *ngSwitchCase="'login-info'"
+          (done)="nextStep($event)"
+          (currentSession)="loginInfoSession($event)"
+          [restoreSessionData]="loginInfoSessionData"
+        >
+        </app-login-info-step>
+      </ng-container>
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-address-info-step
+          *ngSwitchCase="'address-info'"
+          (done)="nextStep($event)"
+          (currentSession)="addressInfoSession($event)"
+          [restoreSessionData]="addressInfoSessionData"
+        >
+        </app-address-info-step>
+      </ng-container>
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-personal-info-step
+          *ngSwitchCase="'personal-info'"
+          (done)="nextStep($event)"
+          (currentSession)="personalInfoSession($event)"
+          [restoreSessionData]="personalInfoSessionData"
+        >
+        </app-personal-info-step>
+      </ng-container>
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-term-agreement-step *ngSwitchCase="'term-agreement-step'" (done)="nextStep($event)">
+        </app-term-agreement-step>
+      </ng-container>
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-success-registration *ngSwitchCase="'success-registration'" (restart)="restart($event)">
+        </app-success-registration>
+      </ng-container>
+      <ng-container [ngSwitch]="currentStep | async">
+        <app-registration-restart *ngSwitchCase="'registration-restart'" (restart)="restart($event)">
+        </app-registration-restart>
+      </ng-container>
+    </div>
   </div>
-  <div nz-col class="gutter-row" [nzSpan]="7"></div>
+  <div nz-col class="gutter-row" [nzSpan]="3"></div>
 </div>

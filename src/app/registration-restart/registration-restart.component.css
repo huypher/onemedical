@@ -7,7 +7,7 @@
   color: #fff;
   background-color: #068466;
   cursor: pointer;
-  width: 30%;
+  flex-basis: 35%;
   height: auto;
   text-align: center;
   vertical-align: middle;
@@ -28,4 +28,16 @@
 button.ant-btn.submit:disabled {
   opacity: .65;
   cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+  .submit-container {
+    flex-direction: column !important;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .button.ant-btn.submit {
+    flex-basis: 100% !important;
+  }
 }

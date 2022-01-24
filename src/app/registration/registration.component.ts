@@ -55,14 +55,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   fromStep(): number {
-    const step = getLocalStorage(stepKey)
-    if (step === '') {
-      this.checkBackVisibility(0)
-      return 0
-    }
-    const stepIdx = steps.findIndex(e => e === step)
-    this.checkBackVisibility(stepIdx)
-    return stepIdx
+    // const step = getLocalStorage(stepKey)
+    // if (step === '') {
+    //   this.checkBackVisibility(0)
+    //   return 0
+    // }
+    // const stepIdx = steps.findIndex(e => e === step)
+    // this.checkBackVisibility(stepIdx)
+    // return stepIdx
+    return 0
   }
 
   nextStep(done: boolean) {

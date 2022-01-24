@@ -42,6 +42,9 @@ export class LoginInfoStepComponent implements OnInit {
     if (this.validateForm.value.password !== null) {
       this.passwordValidator()
     }
+    if (this.validateForm.value.preferredName !== null) {
+      this.showPreferredName()
+    }
   }
 
   inputChange(id: string) {

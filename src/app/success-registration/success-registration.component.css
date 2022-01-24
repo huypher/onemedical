@@ -11,7 +11,7 @@
   font-size: 1.0625rem;
   line-height: 1.8;
   border-radius: 0.25rem;
-  width: 250px;
+  flex-basis: 35%;
 }
 
 ::ng-deep .ant-btn-primary:hover {
@@ -27,4 +27,10 @@
 ::ng-deep .ant-btn.submit:disabled {
   opacity: .65;
   cursor: not-allowed;
+}
+
+::ng-deep .ant-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

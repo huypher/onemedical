@@ -40,6 +40,9 @@ export class PersonalInfoStepComponent implements OnInit {
     if (this.validateForm.value.phoneNumber !== null) {
       this.phoneNumberValidator()
     }
+    if (this.validateForm.value.genderInfo !== null) {
+      this.enableGenderInfo = true
+    }
   }
 
   birthdayValidator() {

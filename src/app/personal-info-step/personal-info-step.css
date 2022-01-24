@@ -8,7 +8,7 @@
 
 .checkbox-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
   margin-bottom: 24px;
 }
 
@@ -30,6 +30,22 @@
   line-height: 5px;
 }
 
+@media (max-width: 800px) {
+  .submit-container {
+    flex-direction: column !important;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .button.ant-btn.submit {
+    flex-basis: 100% !important;
+  }
+
+  input {
+    height: calc(2.7rem + 2px) !important;
+  }
+}
+
 .submit-container {
   display: flex;
   flex-flow: row-reverse wrap;
@@ -39,7 +55,7 @@ button.ant-btn.submit {
   color: #fff;
   background-color: #068466;
   cursor: pointer;
-  width: 30%;
+  flex-basis: 35%;
   height: auto;
   text-align: center;
   vertical-align: middle;

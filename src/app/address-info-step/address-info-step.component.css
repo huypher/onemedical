@@ -10,18 +10,39 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 5%;
+}
+
+@media (max-width: 800px) {
+  .state-zipcode {
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  .submit-container {
+    flex-direction: column !important;
+    margin-bottom: 10px;
+  }
+
+  .button.ant-btn.submit {
+    flex-basis: 100% !important;
+  }
+
+  input {
+    height: calc(2.7rem + 2px) !important;
+  }
 }
 
 .state {
   display: flex;
   flex-flow: column wrap;
-  width: 48%;
+  flex: 10%;
 }
 
 .zipcode {
   display: flex;
   flex-flow: column wrap;
-  width: 48%;
+  flex: 10%;
 }
 
 select.unset[_ngcontent-big-c291] {
@@ -37,7 +58,7 @@ button.ant-btn.submit {
   color: #fff;
   background-color: #068466;
   cursor: pointer;
-  width: 30%;
+  flex-basis: 35%;
   height: auto;
   text-align: center;
   vertical-align: middle;

@@ -13,3 +13,19 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.child-container {
+  flex-basis: 50%;
+}
+
+@media (max-width: 800px) {
+  .child-container {
+    flex-basis: 100%;
+  }
+}
+

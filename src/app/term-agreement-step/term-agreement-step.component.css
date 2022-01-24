@@ -4,11 +4,27 @@
   margin-top: 24px;
 }
 
+@media (max-width: 800px) {
+  .submit-container {
+    flex-direction: column !important;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .button.ant-btn.submit {
+    flex-basis: 100% !important;
+  }
+
+  input {
+    height: calc(2.7rem + 2px) !important;
+  }
+}
+
 button.ant-btn.submit {
   color: #fff;
   background-color: #068466;
   cursor: pointer;
-  width: 30%;
+  flex-basis: 35%;
   height: auto;
   text-align: center;
   vertical-align: middle;
@@ -44,10 +60,6 @@ button.ant-btn.submit:disabled {
   overflow: scroll;
   transition: max-height .5s ease;
 }
-
-/*::ng-deep svg{*/
-/*  fill: #0158b2;*/
-/*}*/
 
 .term-title {
   color: #0158b2;
@@ -114,7 +126,3 @@ button.ant-btn.submit:disabled {
   width: 2em;
   height: 2em;
 }
-
-/*::ng-deep .ant-collapse > .ant-collapse-item > .ant-collapse-header {*/
-/*  pointer-events: none;*/
-/*}*/
