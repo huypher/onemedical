@@ -1,0 +1,11 @@
+version: "3.2"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    image: stackoverfloww/onemedical-fe:demo
+    ports:
+      - 80:80
+  backend:
+    image: stackoverfloww/onemedical-be:demo

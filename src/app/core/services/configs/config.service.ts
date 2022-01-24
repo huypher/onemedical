@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {environment} from "./environment";
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  public urlAddress: string = environment.urlAddress
-  public apiVersion: string = environment.apiVersion
+  public urlAddress: string = environment.apiUrl
+  public apiVersion: string = 'v1'
   public baseUrl: string = `${this.urlAddress}/${this.apiVersion}`
   constructor() { }
 }
